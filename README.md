@@ -3,6 +3,7 @@ This is the repository for the UTPM model behind the Nature Communications artic
 
 
 ## Overview
+The model can be accessed by cloning the github repository or by using the demo jupyter notebook.
 
 ## Table of contents
 
