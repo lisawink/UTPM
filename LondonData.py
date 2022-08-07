@@ -2,7 +2,7 @@
 """Data sourced primarily from the Department for Transport (DfT): https://www.gov.uk/government/organisations/department-for-transport/about/statistics"""
 
 #2019 number of cars in London (thousands) [DfT VEH0204]
-lon_car_2019=2661
+cars_2019=2661
 
 # adoption rate of fuel type in GB yearly from 2001/2015 to 2020 [DfT VEH0253]
 # number of newly registered vehicles of fuel type / total new registrations in that year
@@ -23,9 +23,5 @@ car_age=list(car_per_age[-i]/100 for i in range(0,31))
 fuel_car_p=[8.3,8.3,8.1,8.0,7.9,7.8,7.7,7.6,7.5,7.4,7.2,7.0,6.5,6.3,6.1,5.8,5.6,5.5,5.4,5.4,5.5,5.6,5.7]
 fuel_car_d=[7.0,6.9,6.6,6.3,6.2,6.1,6.2,6.2,6.2,6.3,6.2,5.9,5.7,5.5,5.2,5.0,4.9,4.7,4.6,4.5,4.6,4.9,5.1]
 
-#kgC02 per litre of petrol and diesel
-petrol=2.30176
-diesel=2.65242
-
-#km driven per year by cars & taxis in London from 1994 to 2019 (billion km) [DfT TRA0206]
-km_lon=[25.9,25.8,26,26.1,26.2,26.8,26.5,26.3,26.3,25.7,25.4,25.1,24.8,24.4,23.9,23.9,24.7,24.5,24.6,24.7,25.4,25.6,25.7,26.3,27.3,28.1]
+#km driven per year by cars & taxis in London in 2019 (billion km) [DfT TRA0206]
+km_2019=28.1

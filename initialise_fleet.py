@@ -1,11 +1,15 @@
 """Function to initialise the fleet"""
 
+import LondonData as regional_data
+from sub_models import Adoption_Rate
+from sub_models import Vehicle
+
 def initialise_fleet(p,ph,m,fs,md,c,e):
     """
     Generate a model car fleet for the year 2019 based on 2019 data.
     """
     
-    car_fleet_size=lon_car_2019
+    car_fleet_size=regional_data.cars_2019
     
     #find adoption rates of fuel types
     adoption_diesel=Adoption_Rate(p,ph).adoption_diesel()
@@ -17,7 +21,7 @@ def initialise_fleet(p,ph,m,fs,md,c,e):
     
     #to avoid small number of cars aged 20-30+ skewing model results from scrapping, remove these from list
     #cut first 10 years of car age and distribute proportionally on all other years
-    new_car_age=list(car_age[i]/sum(car_age[10:]) for i in range(10,31))
+    new_car_age=list(regional_data.car_age[i]/sum(regional_data.car_age[10:]) for i in range(10,31))
     
     #for every year of manufacture i.e. 1999 to 2019 (21 years)
     for i in range(0,len(new_car_age)):

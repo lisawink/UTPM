@@ -1,5 +1,9 @@
 """Data classes and sub-models required to run the UTPM"""
 
+import numpy as np
+import scipy as sp
+import LondonData as regional_data
+
 class Mathematics:
     """
     Creates straight and polynomial fit functions
@@ -39,6 +43,9 @@ class Vehicle:
         emissions_value=0
         phev_electric_emissions=0
         phev_tailpipe_emissions=0
+        #kgC02 per litre of petrol and diesel
+        petrol=2.30176
+        diesel=2.65242
         
         #if diesel
         if self.fuel_type==0:
@@ -227,10 +234,10 @@ class Adoption_Rate:
         Creates list of adoption rates of diesel cars from 1989 to 2050 in percentage
         Assumes linear decrease from historical data
         """
-        diesel_increase=Mathematics.poly_fit([2001,2002,2003],adop_car_d[0:3],1)
-        diesel_decrease=Mathematics.poly_fit([2017,2018,2019,2020],adop_car_d[16:],1)
+        diesel_increase=Mathematics.poly_fit([2001,2002,2003],regional_data.adop_car_d[0:3],1)
+        diesel_decrease=Mathematics.poly_fit([2017,2018,2019,2020],regional_data.adop_car_d[16:],1)
         
-        adoption_diesel=np.append(np.append(np.append([0]*9,diesel_increase(range(1998,2004))),adop_car_d[3:-4]),np.append(diesel_decrease(range(2017,2023)),[0]*28))
+        adoption_diesel=np.append(np.append(np.append([0]*9,diesel_increase(range(1998,2004))),regional_data.adop_car_d[3:-4]),np.append(diesel_decrease(range(2017,2023)),[0]*28))
         return(adoption_diesel)
 
     def adoption_plugin(self):
@@ -245,15 +252,15 @@ class Adoption_Rate:
             return np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.)))
         
         if self.ph==2025:
-            adoption_plugin=np.append(np.append(np.append([0]*12,adop_car_ph),10*gaussian(x,2020+(self.ph-2020)/2,5)),[0]*(2050-self.ph+1))
+            adoption_plugin=np.append(np.append(np.append([0]*12,regional_data.adop_car_ph),10*gaussian(x,2020+(self.ph-2020)/2,5)),[0]*(2050-self.ph+1))
         elif self.ph==2030:
-            adoption_plugin=np.append(np.append(np.append([0]*12,adop_car_ph),15*gaussian(x,2020+(self.ph-2020)/2,4)),[0]*(2050-self.ph+1))
+            adoption_plugin=np.append(np.append(np.append([0]*12,regional_data.adop_car_ph),15*gaussian(x,2020+(self.ph-2020)/2,4)),[0]*(2050-self.ph+1))
         elif self.ph==2035:
-            adoption_plugin=np.append(np.append(np.append([0]*12,adop_car_ph),20*gaussian(x,2020+(self.ph-2020)/2,6)),[0]*(2050-self.ph+1))
+            adoption_plugin=np.append(np.append(np.append([0]*12,regional_data.adop_car_ph),20*gaussian(x,2020+(self.ph-2020)/2,6)),[0]*(2050-self.ph+1))
         elif self.ph==2040:
-            adoption_plugin=np.append(np.append(np.append([0]*12,adop_car_ph),25*gaussian(x,2020+(self.ph-2020)/2,7)),[0]*(2050-self.ph+1))
+            adoption_plugin=np.append(np.append(np.append([0]*12,regional_data.adop_car_ph),25*gaussian(x,2020+(self.ph-2020)/2,7)),[0]*(2050-self.ph+1))
         else:
-            adoption_plugin=np.append(np.append(np.append([0]*12,adop_car_ph),15*gaussian(x,2020+(self.ph-2020)/2,5)),[0]*(2050-self.ph+1))
+            adoption_plugin=np.append(np.append(np.append([0]*12,regional_data.adop_car_ph),15*gaussian(x,2020+(self.ph-2020)/2,5)),[0]*(2050-self.ph+1))
         return(adoption_plugin)
     
     def adoption_hybrid(self):
@@ -268,24 +275,24 @@ class Adoption_Rate:
             return np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.)))
         
         if self.p==2025:
-            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(adop_car_h)),15*gaussian(x,2020+(self.p-2020)/2,6)),[0]*(2050-self.p+1))
+            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(regional_data.adop_car_h)),15*gaussian(x,2020+(self.p-2020)/2,6)),[0]*(2050-self.p+1))
         elif self.p==2030:
-            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(adop_car_h)),20*gaussian(x,2020+(self.p-2020)/2,6)),[0]*(2050-self.p+1))
+            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(regional_data.adop_car_h)),20*gaussian(x,2020+(self.p-2020)/2,6)),[0]*(2050-self.p+1))
         elif self.p==2035:
-            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(adop_car_h)),25*gaussian(x,2020+(self.p-2020)/2,7)),[0]*(2050-self.p+1))
+            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(regional_data.adop_car_h)),25*gaussian(x,2020+(self.p-2020)/2,7)),[0]*(2050-self.p+1))
         elif self.p==2040:
-            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(adop_car_h)),30*gaussian(x,2020+(self.p-2020)/2,9)),[0]*(2050-self.p+1))
+            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(regional_data.adop_car_h)),30*gaussian(x,2020+(self.p-2020)/2,9)),[0]*(2050-self.p+1))
         else:
-            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(adop_car_h)),20*gaussian(x,2020+(self.p-2020)/2,6)),[0]*(2050-self.p+1))    
+            adoption_hybrid=np.append(np.append(np.append([0]*12,np.array(regional_data.adop_car_h)),20*gaussian(x,2020+(self.p-2020)/2,6)),[0]*(2050-self.p+1))    
         return(adoption_hybrid)
     
     def adoption_petrol(self):
         """
         Assumes 100% adoption rate, until historical data, then linear decrease from 2020 to 0 at phase-out date
         """
-        decline=Mathematics.straight_fit(2020,adop_car_p[-1],self.p,0,range(2021,self.p))
-        diesel_increase=[100]*3-np.array(Mathematics.poly_fit([2001,2002,2003],adop_car_d[0:3],1)(range(1998,2001)))
-        adoption_petrol=np.append(np.append(np.append(np.append([100]*9,diesel_increase),adop_car_p),decline),[0]*(2050-self.p+1))
+        decline=Mathematics.straight_fit(2020,regional_data.adop_car_p[-1],self.p,0,range(2021,self.p))
+        diesel_increase=[100]*3-np.array(Mathematics.poly_fit([2001,2002,2003],regional_data.adop_car_d[0:3],1)(range(1998,2001)))
+        adoption_petrol=np.append(np.append(np.append(np.append([100]*9,diesel_increase),regional_data.adop_car_p),decline),[0]*(2050-self.p+1))
         return(adoption_petrol)
 
 class Fuel_Consumption:
@@ -301,17 +308,17 @@ class Fuel_Consumption:
         
     def petrol(self):
         #takes average fuel consumption of petrol cars every year and calculates increase/decrease due to lightweighting policies
-        pre_1997=Mathematics.poly_fit([1997,1998,1999],fuel_car_p[0:3],1)
-        post_2020=np.append(Mathematics.straight_fit(2020,fuel_car_p[-1],2025,fuel_car_p[-1]+(self.m-1400)*0.0032,range(2020,2026)),
-                            [fuel_car_p[-1]+(self.m-1400)*0.0032]*25)
-        return np.append(pre_1997(range(1989,2000)),np.append(fuel_car_p[3:],post_2020))
+        pre_1997=Mathematics.poly_fit([1997,1998,1999],regional_data.fuel_car_p[0:3],1)
+        post_2020=np.append(Mathematics.straight_fit(2020,regional_data.fuel_car_p[-1],2025,regional_data.fuel_car_p[-1]+(self.m-1400)*0.0032,range(2020,2026)),
+                            [regional_data.fuel_car_p[-1]+(self.m-1400)*0.0032]*25)
+        return np.append(pre_1997(range(1989,2000)),np.append(regional_data.fuel_car_p[3:],post_2020))
         
     def diesel(self):
         #takes average fuel consumption of diesel cars every year and calculates increase/decrease due to lightweighting policies
-        pre_1997=Mathematics.poly_fit([1997,1998,1999],fuel_car_d[0:3],1)
-        post_2020=np.append(Mathematics.straight_fit(2020,fuel_car_d[-1],2025,fuel_car_d[-1]+(self.m-1400)*0.0028,range(2020,2026)),
-                            [fuel_car_d[-1]+(self.m-1400)*0.0028]*25)
-        return np.append(pre_1997(range(1989,2000)),np.append(fuel_car_d[3:],post_2020))
+        pre_1997=Mathematics.poly_fit([1997,1998,1999],regional_data.fuel_car_d[0:3],1)
+        post_2020=np.append(Mathematics.straight_fit(2020,regional_data.fuel_car_d[-1],2025,regional_data.fuel_car_d[-1]+(self.m-1400)*0.0028,range(2020,2026)),
+                            [regional_data.fuel_car_d[-1]+(self.m-1400)*0.0028]*25)
+        return np.append(pre_1997(range(1989,2000)),np.append(regional_data.fuel_car_d[3:],post_2020))
     
     def bev(self):
         #takes average fuel consumption of BEVs every year and calculates increase/decrease due to lightweighting policies
@@ -347,7 +354,7 @@ class Electricity:
     def lca_emissions(self):
         #calculates the life cycle electricity generation emissions every year from 2010 to 2051
         
-        avg_lca=(np.array(Electricity.coal)*980+np.array(Electricity.gas)*670+np.array(Electricity.wind)*10+np.array(Electricity.nuclear)*12\
+        avg_lca=(np.array(Electricity.coal)*980+np.array(Electricity.gas)*450+np.array(Electricity.wind)*10+np.array(Electricity.nuclear)*12\
         +np.array(Electricity.solar)*45+np.array(Electricity.bioenergy)*29+np.array(Electricity.hydro)*31+np.array(Electricity.other)*500)/100\
         +Electricity.storage/100*43
         
@@ -466,8 +473,10 @@ class Distance_Driven:
     
     def Lon(self):
         end=2022+self.r 
+        km=regional_data.km_2019
+
         #rate of modal shift determined by the number of years the modal shift happens over r (starting from 2022)
-        preprojection=Mathematics.straight_fit(2020,km_lon[-1],2022,km_lon[-1],range(2020,2022))
-        projection=Mathematics.straight_fit(2022,km_lon[-1],end,km_lon[-1]*(1+self.md/100),range(2022,end+1))
-        postprojection=Mathematics.straight_fit(end,km_lon[-1]*(1+self.md/100),2052,km_lon[-1]*(1+self.md/100),range(end+1,2052))
-        return np.append(np.append(np.append(np.array(km_lon),preprojection),projection),postprojection)
+        preprojection=Mathematics.straight_fit(2020,km,2022,km,range(2020,2022))
+        projection=Mathematics.straight_fit(2022,km,end,km*(1+self.md/100),range(2022,end+1))
+        postprojection=Mathematics.straight_fit(end,km*(1+self.md/100),2052,km*(1+self.md/100),range(end+1,2052))
+        return np.append(np.append(np.append(np.array(km),preprojection),projection),postprojection)
