@@ -353,6 +353,7 @@ class Electricity:
         
     def lca_emissions(self):
         #calculates the life cycle electricity generation emissions every year from 2010 to 2051
+        #sum of electricity generation and transmission infrastructure emissions
         
         avg_lca=(np.array(Electricity.coal)*980+np.array(Electricity.gas)*450+np.array(Electricity.wind)*10+np.array(Electricity.nuclear)*12\
         +np.array(Electricity.solar)*45+np.array(Electricity.bioenergy)*29+np.array(Electricity.hydro)*31+np.array(Electricity.other)*500)/100\
@@ -479,4 +480,4 @@ class Distance_Driven:
         preprojection=Mathematics.straight_fit(2020,km,2022,km,range(2020,2022))
         projection=Mathematics.straight_fit(2022,km,end,km*(1+self.md/100),range(2022,end+1))
         postprojection=Mathematics.straight_fit(end,km*(1+self.md/100),2052,km*(1+self.md/100),range(end+1,2052))
-        return np.append(np.append(np.append(np.array(km),preprojection),projection),postprojection)
+        return np.append(np.append(preprojection,projection),postprojection)
