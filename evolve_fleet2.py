@@ -1,5 +1,6 @@
 import numpy as np
 import initialise_fleet1
+import sum_over_fleet
 from LondonData import cars_2019
 from sub_models1 import Mathematics, Adoption_Rate, Vehicle, Distance_Driven, Fuel_Consumption, Electricity, ModalShift
 
@@ -11,6 +12,16 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     #create car list from vehicle initialisation class sorted by year of manufacture in ascending order (oldest cars first)
     car_list=initialise_fleet1.initialise_fleet(p,ph,m,fs,md,c,e) 
     
+    results=['total_cars','bev_cars','petrol_cars','diesel_cars','plugin_cars','conv_cars','ages','demand_difference','electric_emiss',
+            'tailpipe_emiss','wtt_emiss','mod_shift_emiss','elec_demand','foss_demand','mod_shift_energy','ev_prod_emiss',
+            'ice_prod_emiss','conv_prod_emiss','ev_prod_energy','ice_prod_energy','conv_prod_energy','km_driven']
+
+    results_dict={}
+
+    for i in results:
+        results_dict[i]=[]
+
+    """
     total_cars=[]
     bev_cars=[]
     petrol_cars=[]
@@ -31,6 +42,7 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     ice_prod_energy=[]
     conv_prod_energy=[]
     km_driven=[]
+    """
     
     #find future fleet size using user input for % increase from fleet size in 2019 to 2041 levels
     fleetsize=np.append(Mathematics.straight_fit(2019,cars_2019,2041,cars_2019*(1+fs/100),range(2020,2041)),[cars_2019*(1+fs/100)]*11)
@@ -40,7 +52,7 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
 
         #find age distribution of cars 
         age_list=[(2020+i-x.age) for x in car_list]
-        ages.append(age_list)
+        results_dict['ages'].append(age_list)
         
         before_removal=len(car_list)
         
@@ -136,23 +148,26 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
         #print('year=',2020+i,'new cars=',new_cars, 'new bevs=', new_BEV, 'new petrol=',new_petrol, 'new diesel', new_diesel, 'new plugin', new_plugin)
             
         #find number of cars for plotting
-        total_cars.append(len(car_list))
-        bev_cars.append(sum(p.fuel_type == 4 for p in car_list))
-        petrol_cars.append(sum(p.fuel_type==1 for p in car_list))
-        diesel_cars.append(sum(p.fuel_type==0 for p in car_list))
-        plugin_cars.append(sum(p.fuel_type==2 for p in car_list))
-        conv_cars.append(sum(p.fuel_type==3 for p in car_list))
+        results_dict['total_cars'].append(len(car_list))
+        results_dict['bev_cars'].append(sum(p.fuel_type == 4 for p in car_list))
+        results_dict['petrol_cars'].append(sum(p.fuel_type==1 for p in car_list))
+        results_dict['diesel_cars'].append(sum(p.fuel_type==0 for p in car_list))
+        results_dict['plugin_cars'].append(sum(p.fuel_type==2 for p in car_list))
+        results_dict['conv_cars'].append(sum(p.fuel_type==3 for p in car_list))
         
         #find difference in distance driven in baseline (business-as-usual case) and modally shifted case
         #in order to calculate modal shift emissions
         demand_diff=Distance_Driven(20,28).Lon()[i]*1000000000-Distance_Driven(md,r).Lon()[i]*1000000000
         if demand_diff>0:
-            demand_difference.append(demand_diff)
+            results_dict['demand_difference'].append(demand_diff)
         if demand_diff<=0:
-            demand_difference.append(0)
+            results_dict['demand_difference'].append(0)
         
         #dist=distance driven by each cars in that year
         dist=Distance_Driven(md,r).Lon()[i]*1000000000/len(car_list)
+        
+        """
+        Now in sum_over_fleet
         
         #create lists
         electric_emissions=[]
@@ -244,6 +259,12 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
         elec_demand.append(sum(elec_demand_yearly))
         #fossil fuel energy demand in MJ
         foss_demand.append(sum(foss_demand_yearly))
+        """
+
+        yearly_results=sum_over_fleet.sum_over_fleet(car_list,dist,m,i)
+
+        for i in yearly_results:
+            results_dict[i].append(yearly_results[i])
     
     avg_energy_efficiency=Electricity(e).avg_efficiency()
     avg_eroi=Electricity(e).avg_eroi()
@@ -252,18 +273,18 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     storage_eroi=4
     
     #energy demand = electricity demand divided by the overall efficiency of the grid, plus embedded energy over EROI
-    elec_en_demand=np.array(elec_demand)*3.6/np.array(avg_energy_efficiency)[10:]+\
-    ((np.array(elec_demand)*3.6/np.array(avg_energy_efficiency)[10:]))/np.array(avg_eroi)[10:]+\
-    (((np.array(elec_demand)*3.6*0.15*np.array(ren_perc)[10:]/100)/avg_renewable_efficiency))/storage_eroi
+    results_dict['elec_demand']=np.array(results_dict['elec_demand'])*3.6/np.array(avg_energy_efficiency)[10:]+\
+    ((np.array(results_dict['elec_demand'])*3.6/np.array(avg_energy_efficiency)[10:]))/np.array(avg_eroi)[10:]+\
+    (((np.array(results_dict['elec_demand'])*3.6*0.15*np.array(ren_perc)[10:]/100)/avg_renewable_efficiency))/storage_eroi
         
     #calculate emissions from modal shift
     co2intensity=ModalShift.co2intensity(e)
     mod_energy=ModalShift.energy()
     #average occupancy of car is 1.6, so calculate modal shift emissions for every passenger 
-    mod_shift_emiss=np.array(demand_difference)*1.6*np.array(co2intensity)/1000000000
-    mod_shift_energy=np.array(demand_difference)*1.6*np.array(mod_energy)    
+    results_dict['mod_shift_emiss']=np.array(results_dict['demand_difference'])*1.6*np.array(co2intensity)/1000000000
+    results_dict['mod_shift_energy']=np.array(results_dict['demand_difference'])*1.6*np.array(mod_energy)    
   
-    return(total_cars,bev_cars,petrol_cars,diesel_cars,plugin_cars,conv_cars,ages,electric_emiss,tailpipe_emiss,wtt_emiss,mod_shift_emiss,elec_en_demand,foss_demand,mod_shift_energy,ev_prod_emissions,ice_prod_emissions,conv_prod_emissions,ev_prod_energy,ice_prod_energy,conv_prod_energy,km_driven)
+    return(results_dict)
 
 # example run
 # evolve_fleet(2030,2035,20,15,1400,20,20,0,0,2050,28) 
