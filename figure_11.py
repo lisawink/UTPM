@@ -1,4 +1,4 @@
-from UTPM_final1 import Run_Model
+from UTPM_Run_Model import Run_Model
 from IPython.display import Markdown, display
 import matplotlib.pyplot as plt
 import numpy as np
@@ -45,8 +45,13 @@ x=["Baseline","BEVs Powered by 100%\nRenewable Energy","Fossil Fuel Phase-Out: 2
    "Light-weighting: 20%","40%", "Regulated EV Manufacture",
    "Local Transport Strategy","Local Net-Zero 2030 Target","Car Travel Activity (CTA): -43%","-66%","-81%",
    "Combined Policies with CTA:\n-76% by 2025","-88% by 2027","Use-Phase Carbon Budget if\nHistorical Share Continues"]
+"""
+    results=['total_cars','bev_cars','petrol_cars','diesel_cars','plugin_cars','conv_cars','ages','demand_difference','electric_emiss',
+            'tailpipe_emiss','wtt_emiss','mod_shift_emiss','elec_demand','foss_demand','mod_shift_energy','ev_prod_emiss',
+            'ice_prod_emiss','conv_prod_emiss','ev_prod_energy','ice_prod_energy','conv_prod_energy','km_driven']
 
-electric=[base[6][-1],base_ren[6][-1],p3030[6][-1],p2525[6][-1],third_rf[6][-1],lw_20[6][-1],lw_40[6][-1],base_eu[6][-1],mts1[6][-1],mts2[6][-1],d4343[6][-1],d6666[6][-1],d8181[6][-1],extreme1[6][-1],extreme2[6][-1],0]
+"""
+electric=[base['electric_emiss'][-1],base_ren['electric_emiss'][-1],p3030['electric_emiss'][-1],p2525['electric_emiss'][-1],third_rf['electric_emiss'][-1],lw_20['electric_emiss'][-1],lw_40['electric_emiss'][-1],base_eu['electric_emiss'][-1],mts1['electric_emiss'][-1],mts2['electric_emiss'][-1],d4343['electric_emiss'][-1],d6666['electric_emiss'][-1],d8181['electric_emiss'][-1],extreme1['electric_emiss'][-1],extreme2['electric_emiss'][-1],0]
 elec=((np.array(electric)))
 
 tailpipe=[base[7][-1],base_ren[7][-1],p3030[7][-1],p2525[7][-1],third_rf[7][-1],lw_20[7][-1],lw_40[7][-1],base_eu[7][-1],mts1[7][-1],mts2[7][-1],d4343[7][-1],d6666[7][-1],d8181[7][-1],extreme1[7][-1],extreme2[7][-1],0]

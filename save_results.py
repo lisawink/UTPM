@@ -1,5 +1,5 @@
 import pandas as pd
-from UTPM_final import Run_Model
+from UTPM_Run_Model import Run_Model
 
 phaseout=[2025,2030,2040]
 elec_decarb=[2020,2050,2060]

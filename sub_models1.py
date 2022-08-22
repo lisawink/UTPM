@@ -43,9 +43,9 @@ class Vehicle:
         emissions_value=0
         phev_electric_emissions=0
         phev_tailpipe_emissions=0
-        #kgC02 per litre of petrol and diesel
-        petrol=2.30176
-        diesel=2.65242
+        #kgC02 per litre of petrol and diesel (average biofuel blend)
+        petrol=2.14805
+        diesel=2.52058
         
         #if diesel
         if self.fuel_type==0:
@@ -68,6 +68,29 @@ class Vehicle:
             emissions_value=np.array(Fuel_Consumption(self.m).bev()[self.age-1989])*10*np.array(Electricity(self.e).lca_emissions()[y-2010])
 
         return emissions_value,phev_electric_emissions,phev_tailpipe_emissions
+
+    def wtt_emissions(self,y):
+        """
+        Specifies well-to-tank emissions for petrol and diesel
+        """
+        #kgC02e per litre of petrol and diesel
+        petrol=0.61328
+        diesel=0.60986
+
+        #if diesel
+        if self.fuel_type==0:
+            #[diesel]=kgCO2/l, [fuel consumption]=l/100km, so *10 gives [emissions]=g/km
+            emissions_value=diesel*10*np.array(Fuel_Consumption(self.m).diesel()[self.age-1989])
+        #if petrol
+        if self.fuel_type==1:
+            #[petrol]=kgCO2/l, [fuel consumption]=l/100km, so *10 gives [emissions]=g/km
+            emissions_value=petrol*10*np.array(Fuel_Consumption(self.m).petrol()[self.age-1989])
+        #if hybrid
+        if self.fuel_type==2:
+            #real-world PHEV utility factor of 39% as found by the ICCT
+            emissions_value=0.61*petrol*10*np.array(Fuel_Consumption(self.m).petrol()[self.age-1989])
+
+        return emissions_value
     
     def prod_emissions(self,y):
         """
@@ -298,6 +321,7 @@ class Adoption_Rate:
 class Fuel_Consumption:
     """
     Calculates fuel consumption of petrol, diesel and hybrid cars, and the emissions intensity of the electrical grid
+    1989 to 2050
     """
     
     def __init__(self,mass):

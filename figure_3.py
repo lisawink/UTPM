@@ -1,4 +1,4 @@
-from UTPM_final import Run_Model
+from UTPM_Run_Model import Run_Model
 import matplotlib.pyplot as plt
 import numpy as np
 
