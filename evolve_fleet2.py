@@ -284,6 +284,8 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     results_dict['mod_shift_emiss']=np.array(results_dict['demand_difference'])*1.6*np.array(co2intensity)/1000000000
     results_dict['mod_shift_energy']=np.array(results_dict['demand_difference'])*1.6*np.array(mod_energy)    
   
+    print(results_dict)
+
     return(results_dict)
 
 # example run
