@@ -131,6 +131,7 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
 
     results_dict['cum_elec']=np.append(0,np.cumsum(np.array(results_dict['elec_demand'])))
     results_dict['cum_foss']=np.append(0,np.cumsum(np.array(results_dict['foss_demand'])))
+    results_dict['cum_wtt_en']=np.append(0,np.cumsum(np.array(results_dict['wtt_energy'])))
     results_dict['cum_ev_en']=np.append(0,np.cumsum(np.array(results_dict['ev_prod_energy'])))
     results_dict['cum_ice_en']=np.append(0,np.cumsum(np.array(results_dict['ice_prod_energy'])))
     results_dict['cum_conv_en']=np.append(0,np.cumsum(np.array(results_dict['conv_prod_energy'])))

@@ -58,7 +58,7 @@ results_fig1={}
 #results_categories=['cum_electric','cum_tailpipe','cum_wtt_emiss','cum_ev_prod','cum_ice_prod','cum_conv_prod',
 #                    'cum_elec','cum_foss','cum_ev_en','cum_ice_en','cum_conv_en']
 results_categories=['cum_electric','cum_tailpipe','cum_ev_prod','cum_ice_prod','cum_wtt_emiss','cum_conv_prod',
-                    'cum_elec','cum_foss','cum_ev_en','cum_ice_en','cum_conv_en']
+                    'cum_elec','cum_foss','cum_wtt_en','cum_ev_en','cum_ice_en','cum_conv_en']
 
 
 #ISSUE IS IN THE SAVING AND READING OF THE CSV FILE
@@ -74,6 +74,8 @@ for i in results_categories:
     #append with 0 for carbon budget bar
     results_fig1[i].append(0)
     results_fig1[i]=np.array(results_fig1[i])
+    if i in ['cum_elec','cum_foss','cum_wtt_en','cum_ev_en','cum_ice_en','cum_conv_en']:
+        results_fig1[i]=results_fig1[i]/10**12
 
     print('this is results fig 1')
     print(results_fig1)
@@ -131,17 +133,14 @@ conv1=((np.array(converted1))/10**12)
 #calculates percentage change from base case
 if type(policy_results['base']['cum_electric'])==pd.Series:
     base_case_emissions=policy_results['base']['cum_electric'].dropna().tolist()[-1]+policy_results['base']['cum_tailpipe'].dropna().tolist()[-1]+policy_results['base']['cum_wtt_emiss'].dropna().tolist()[-1]+policy_results['base']['cum_ev_prod'].dropna().tolist()[-1]+policy_results['base']['cum_ice_prod'].dropna().tolist()[-1]+policy_results['base']['cum_conv_prod'].dropna().tolist()[-1]
-    base_case_energy=(policy_results['base']['cum_elec'].dropna().tolist()[-1]+policy_results['base']['cum_foss'].dropna().tolist()[-1]+policy_results['base']['cum_ev_en'].dropna().tolist()[-1]+policy_results['base']['cum_ice_en'].dropna().tolist()[-1]+policy_results['base']['cum_conv_en'].dropna().tolist()[-1])/10**12
+    base_case_energy=(policy_results['base']['cum_elec'].dropna().tolist()[-1]+policy_results['base']['cum_foss'].dropna().tolist()[-1]+policy_results['base']['cum_wtt_en'].dropna().tolist()[-1]+policy_results['base']['cum_ev_en'].dropna().tolist()[-1]+policy_results['base']['cum_ice_en'].dropna().tolist()[-1]+policy_results['base']['cum_conv_en'].dropna().tolist()[-1])/10**12
 else:
     base_case_emissions=policy_results['base']['cum_electric'][-1]+policy_results['base']['cum_tailpipe'][-1]+policy_results['base']['cum_wtt_emiss'][-1]+policy_results['base']['cum_ev_prod'][-1]+policy_results['base']['cum_ice_prod'][-1]+policy_results['base']['cum_conv_prod'][-1]
-    base_case_energy=(policy_results['base']['cum_elec'][-1]+policy_results['base']['cum_foss'][-1]+policy_results['base']['cum_ev_en'][-1]+policy_results['base']['cum_ice_en'][-1]+policy_results['base']['cum_conv_en'][-1])/10**12
+    base_case_energy=(policy_results['base']['cum_elec'][-1]+policy_results['base']['cum_foss'][-1]+policy_results['base']['cum_wtt_en'][-1]+policy_results['base']['cum_ev_en'][-1]+policy_results['base']['cum_ice_en'][-1]+policy_results['base']['cum_conv_en'][-1])/10**12
 
 per_change_emiss=((results_fig1['cum_electric']+results_fig1['cum_tailpipe']+results_fig1['cum_wtt_emiss']+results_fig1['cum_ev_prod']+results_fig1['cum_ice_prod']+results_fig1['cum_conv_prod']-base_case_emissions)/base_case_emissions)*100
 
-
-
-
-per_change_energy=((results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_ev_en']+
+per_change_energy=((results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_wtt_en']+results_fig1['cum_ev_en']+
         results_fig1['cum_ice_en']+results_fig1['cum_conv_en']-
         base_case_energy)/base_case_energy)*100
 
@@ -157,7 +156,7 @@ error=np.random.rand(8)
 axs[0].grid(axis='x')
 axs[0].barh(pos,results_fig1['cum_tailpipe'],width,color=['black'], align='center',label='Tailpipe')
 axs[0].barh(pos,results_fig1['cum_electric'],width,results_fig1['cum_tailpipe'],color=['tab:blue'], align='center',label='Electricity')
-axs[0].barh(pos,results_fig1['cum_wtt_emiss'],width,results_fig1['cum_electric']+results_fig1['cum_tailpipe'],color=['tab:grey'], align='center',label='WTT Emissions')
+axs[0].barh(pos,results_fig1['cum_wtt_emiss'],width,results_fig1['cum_electric']+results_fig1['cum_tailpipe'],color=['tab:grey'], align='center',label='WTT Fuels')
 axs[0].barh(pos,results_fig1['cum_ev_prod'],width,results_fig1['cum_electric']+results_fig1['cum_tailpipe']+results_fig1['cum_wtt_emiss'],color=['tab:red'], align='center',label='EV Embedded',alpha=1)
 axs[0].barh(pos,results_fig1['cum_ice_prod'],width,results_fig1['cum_electric']+results_fig1['cum_tailpipe']+results_fig1['cum_wtt_emiss']+results_fig1['cum_ev_prod'],color=['tab:orange'], align='center',label='ICEV Embedded')
 axs[0].barh(pos,results_fig1['cum_conv_prod'],width,results_fig1['cum_electric']+results_fig1['cum_tailpipe']+results_fig1['cum_wtt_emiss']+results_fig1['cum_ev_prod']+results_fig1['cum_ice_prod'],color=['tab:purple'], align='center',label='Retrofit Embedded')
@@ -169,8 +168,7 @@ axs[0].set_ylim(-1,21)
 
 axs[0].set_xlabel('Cumulative Emissions up to 2050 (MtCO$_{2eq}$)')
 axs[0].invert_yaxis()
-axs[0].set_yticks(pos)
-axs[0].set_yticklabels(labels_fig1)
+
 axs[0].invert_yaxis()
 axs[0].plot([base_case_emissions, base_case_emissions], [-2,24], "k--")
 #axs[0].plot([21.7,21.7], [-2,24], "k--",color='black')
@@ -187,18 +185,19 @@ axs[0].plot([63.08470628110841]+list(y_new)+[21.80],[-1]+list(x_new)+[21.7],colo
 axs[0].set_yticks(pos)
 axs[0].set_yticklabels(labels_fig1)
 
-axs[1].barh(pos,results_fig1['cum_foss'],width,color=['black'], align='center',label='Tailpipe')
-axs[1].barh(pos,results_fig1['cum_elec'],width,results_fig1['cum_foss'],color=['tab:blue'], align='center',label='Electricity')
-axs[1].barh(pos,results_fig1['cum_ev_en'],width,results_fig1['cum_elec']+results_fig1['cum_foss'],color=['tab:red'], align='center',label='EV Embedded')
-axs[1].barh(pos,results_fig1['cum_ice_en'],width,results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_ev_en'],color=['tab:orange'], align='center',label='ICEV Embedded')
-axs[1].barh(pos,results_fig1['cum_conv_en'],width,results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_ev_en']+results_fig1['cum_ice_en'],color=['tab:purple'], align='center',label='Retrofit Embedded')
 axs[1].grid(axis='x')
+axs[1].barh(pos,results_fig1['cum_foss'],width,color=['black'], align='center',label='Tailpipe')
+axs[1].barh(pos,results_fig1['cum_wtt_en'],width,results_fig1['cum_foss'],color=['grey'], align='center',label='WTT Fuels')
+axs[1].barh(pos,results_fig1['cum_elec'],width,results_fig1['cum_wtt_en']+results_fig1['cum_foss'],color=['tab:blue'], align='center',label='Electricity')
+axs[1].barh(pos,results_fig1['cum_ev_en'],width,results_fig1['cum_wtt_en']+results_fig1['cum_elec']+results_fig1['cum_foss'],color=['tab:red'], align='center',label='EV Embedded')
+axs[1].barh(pos,results_fig1['cum_ice_en'],width,results_fig1['cum_wtt_en']+results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_ev_en'],color=['tab:orange'], align='center',label='ICEV Embedded')
+axs[1].barh(pos,results_fig1['cum_conv_en'],width,results_fig1['cum_wtt_en']+results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_ev_en']+results_fig1['cum_ice_en'],color=['tab:purple'], align='center',label='Retrofit Embedded')
 axs[1].set_xlabel('Cumulative Energy\nDemand up to 2050 (EJ)')
 axs[1].set_yticks(pos)
 axs[1].set_yticklabels(labels_fig1)
 axs[1].plot([base_case_energy, base_case_energy], [-2,24], "k--")
 axs[1].text(-0.08, 1, 'b', transform=axs[1].transAxes,fontsize='medium', va='bottom',weight="bold")
-axs[1].set_xticks(np.arange(0,3,0.5))
+axs[1].set_xticks(np.arange(0,2.9,0.5))
 
 """
 for i, v in enumerate(elec+tail+ev+ice+conv):
@@ -213,7 +212,7 @@ for i, v in enumerate(results_fig1['cum_electric']+results_fig1['cum_tailpipe']+
         #plt.text(130,pos[i]+0.1, '{:.1f}%'.format(per[i]))
         #v+1
 
-for i, v in enumerate(results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_ev_en']+results_fig1['cum_ice_en']+results_fig1['cum_conv_en']):
+for i, v in enumerate(results_fig1['cum_elec']+results_fig1['cum_foss']+results_fig1['cum_wtt_en']+results_fig1['cum_ev_en']+results_fig1['cum_ice_en']+results_fig1['cum_conv_en']):
     if i<15:
         axs[1].text(v-0.55,pos[i]+0.25, '{:.1f}%'.format(per_change_energy[i]),color='white')
         #plt.text(130,pos[i]+0.1, '{:.1f}%'.format(per[i]))

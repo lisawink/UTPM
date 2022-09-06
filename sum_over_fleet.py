@@ -13,7 +13,7 @@ def sum_over_fleet(car_list,dist,mass,year):
 
     #yearly results saved in dictionary
     yearly_results={}
-    yearly_results_type=['electric_emiss','tailpipe_emiss','wtt_emiss','elec_demand','foss_demand','ev_prod_emiss',
+    yearly_results_type=['electric_emiss','tailpipe_emiss','wtt_emiss','elec_demand','foss_demand','wtt_energy','ev_prod_emiss',
                         'ice_prod_emiss','conv_prod_emiss','ev_prod_energy','ice_prod_energy','conv_prod_energy','km_driven']
     
     for i in yearly_results_type:
@@ -46,6 +46,8 @@ def sum_over_fleet(car_list,dist,mass,year):
             #diesel
             #MJ of fossil fuel energy (l/km fuel consumption*energy density of fuel*km driven)
             yearly_results['foss_demand'].append(Fuel_Consumption(mass).diesel()[car_list[j].age-1989]/100*36.9*dist)
+            #multipy above by WTT energy expended factor to find WTT energy
+            yearly_results['wtt_energy'].append(Fuel_Consumption(mass).diesel()[car_list[j].age-1989]/100*36.9*dist*0.26)
             #emissions in gCO2e
             yearly_results['tailpipe_emiss'].append(car_list[j].emissions(2020+year)[0]*dist)
             yearly_results['wtt_emiss'].append(car_list[j].wtt_emissions(2020+year)*dist)
@@ -53,6 +55,7 @@ def sum_over_fleet(car_list,dist,mass,year):
         if car_list[j].fuel_type==1:
             #petrol
             yearly_results['foss_demand'].append(Fuel_Consumption(mass).petrol()[car_list[j].age-1989]/100*33.7*dist)
+            yearly_results['wtt_energy'].append(Fuel_Consumption(mass).diesel()[car_list[j].age-1989]/100*36.9*dist*0.23)
             yearly_results['tailpipe_emiss'].append(car_list[j].emissions(2020+year)[0]*dist)
             yearly_results['wtt_emiss'].append(car_list[j].wtt_emissions(2020+year)*dist)
         
@@ -63,6 +66,7 @@ def sum_over_fleet(car_list,dist,mass,year):
             yearly_results['elec_demand'].append(0.39*(Fuel_Consumption(mass).bev()[year+30]/100*dist+Fuel_Consumption(mass).bev()[year+30]/100*dist*1.36/3.6))
             yearly_results['electric_emiss'].append(car_list[j].emissions(2020+year)[1]*dist+0.39*Fuel_Consumption(mass).bev()[year+30]/100*dist*94.06)
             yearly_results['foss_demand'].append(0.61*Fuel_Consumption(mass).petrol()[car_list[j].age-1989]/100*33.7*dist)
+            yearly_results['wtt_energy'].append(0.61*Fuel_Consumption(mass).petrol()[car_list[j].age-1989]/100*33.7*dist*0.23)
             yearly_results['tailpipe_emiss'].append(car_list[j].emissions(2020+year)[2]*dist)
             yearly_results['wtt_emiss'].append(car_list[j].wtt_emissions(2020+year)*dist)
         
