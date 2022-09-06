@@ -74,4 +74,73 @@ python3 setup.py install
 
 This project is covered under the **Apache 2.0 License**.
 
+# automation-scripts
 
+0. Install Python 3.8
+```
+Only install version 3.8 please from https://www.python.org/downloads/ 
+```
+
+1. Install pip (package manager)
+
+```
+python -m ensurepip --upgrade
+```
+
+2. Install pipenv
+
+```
+pip install --user pipenv
+```
+
+3. Set up pipenv
+
+```
+pipenv install
+```
+
+# if pipenv command not found
+
+2. Install pipenv for python 3
+
+```
+pip3 install pipenv
+```
+
+3. Change path
+
+```
+PYTHON_BIN_PATH="$(python3 -m site --user-base)/bin"
+PATH="$PATH:$PYTHON_BIN_PATH"
+```
+4. Set up pipenv
+
+```
+pipenv install
+```
+
+# to install a new package
+
+```
+pipenv install PACKAGE_NAME
+```
+
+# to run a script
+
+1. Open the pipenv shell so you have access to the right packages
+
+```
+pipenv shell
+```
+
+2. Run the script
+
+```
+python PATH_TO_SCRIPT
+```
+
+# If you have the issue "Import pandas could not be resolved from source Pylance(reportMissingModuleSource)"
+
+1. Check out: https://stackoverflow.com/questions/71617057/import-pandas-could-not-be-resolved-from-source-pylancereportmissingmodulesourc
+
+Have fun!

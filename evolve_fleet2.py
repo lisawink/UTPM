@@ -13,7 +13,7 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     car_list=initialise_fleet1.initialise_fleet(p,ph,m,fs,md,c,e) 
     
     results=['total_cars','bev_cars','petrol_cars','diesel_cars','plugin_cars','conv_cars','ages','demand_difference','electric_emiss',
-            'tailpipe_emiss','wtt_emiss','mod_shift_emiss','elec_demand','foss_demand','mod_shift_energy','ev_prod_emiss',
+            'tailpipe_emiss','wtt_emiss','mod_shift_emiss','elec_demand','foss_demand','wtt_energy','mod_shift_energy','ev_prod_emiss',
             'ice_prod_emiss','conv_prod_emiss','ev_prod_energy','ice_prod_energy','conv_prod_energy','km_driven']
 
     results_dict={}
@@ -284,6 +284,8 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     results_dict['mod_shift_emiss']=np.array(results_dict['demand_difference'])*1.6*np.array(co2intensity)/1000000000
     results_dict['mod_shift_energy']=np.array(results_dict['demand_difference'])*1.6*np.array(mod_energy)    
   
+    print(results_dict)
+
     return(results_dict)
 
 # example run
