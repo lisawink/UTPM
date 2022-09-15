@@ -103,8 +103,8 @@ def sum_over_fleet(car_list,dist,mass,year):
 
     for i in yearly_results:
         yearly_results[i]=sum(yearly_results[i])
-        print(yearly_results[i])
-    print(yearly_results)
+        #print(yearly_results[i])
+    #print(yearly_results)
 
     yearly_results['electric_emiss']=yearly_results['electric_emiss']/10**12
     yearly_results['tailpipe_emiss']=yearly_results['tailpipe_emiss']/10**12

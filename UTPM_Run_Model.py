@@ -13,6 +13,7 @@ import evolve_fleet2
 print("This is my file to test Python's execution methods.")
 print("The variable __name__ tells me which context this file is running in.")
 print("The value of __name__ is:", repr(__name__))
+print("File has changed")
 
 def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
                 fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate):
@@ -31,7 +32,7 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
     
     results_dict=evolve_fleet2.evolve_fleet(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
                 fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate)
-    print(results_dict)
+    #print(results_dict)
 
     #Print policy choices
     print('Policies: Phase-Out:',phase_out_date,'Hybrid Phase-Out:',phase_out_hybrid,'Scrap Age:',scrap_age_post2020,\
@@ -137,7 +138,7 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
     results_dict['cum_conv_en']=np.append(0,np.cumsum(np.array(results_dict['conv_prod_energy'])))
     results_dict['cum_mod_en']=np.append(0,np.cumsum(np.array(results_dict['mod_shift_energy'])))
 
-    #list too long for csv output
+    #ages list too long for csv output so set to 0
     results_dict['ages']=0
     
     #returns emissions by type, cumulative emissions by type, energy demand by type, cumulative energy demand by type,
@@ -149,7 +150,7 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
             np.array(elec_demand),foss_demand,ev_prod_energy,ice_prod_energy,conv_prod_energy,mod_shift_energy,\
             cum_elec,cum_foss,cum_ev_en,cum_ice_en,cum_conv_en,cum_mod_en,ages,km_driven
     """
-    print(results_dict)
+    #print(results_dict)
     return results_dict
 
 if __name__ == '__main__':
