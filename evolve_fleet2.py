@@ -43,6 +43,7 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     conv_prod_energy=[]
     km_driven=[]
     """
+    avg_cars_removed=[]
     
     #find future fleet size using user input for % increase from fleet size in 2019 to 2041 levels
     fleetsize=np.append(Mathematics.straight_fit(2019,cars_2019,2041,cars_2019*(1+fs/100),range(2020,2041)),[cars_2019*(1+fs/100)]*11)
@@ -96,6 +97,11 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
                     
         car_list=car_list2
         after_removal=len(car_list)
+
+        cars_removed=before_removal-after_removal
+        per_cars_removed=cars_removed/before_removal
+        print('cars removed:',cars_removed,'percentage:',per_cars_removed)
+        avg_cars_removed.append(per_cars_removed)
         
         #find number of new cars needed to satisfy total fleet size
         #fleet size in year n+1 - number of cars in list after cars have been scrapped
@@ -266,6 +272,8 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
         for i in yearly_results:
             results_dict[i].append(yearly_results[i])
     
+    print(sum(avg_cars_removed)/31)
+
     avg_energy_efficiency=Electricity(e).avg_efficiency()
     avg_eroi=Electricity(e).avg_eroi()
     ren_perc=Electricity(e).ren_percentage()

@@ -1,9 +1,8 @@
 # Urban Transport Policy Model (UTPM)
 This is the repository for the UTPM model behind the Nature Communications article:
 
-
 ## Overview
-The model can be accessed by cloning the github repository or by using the demo jupyter notebook.
+The model can be accessed by cloning the github repository and following the instructions below or by using the demo jupyter notebook.
 
 ## Table of contents
 
@@ -14,29 +13,60 @@ To work with everything in this repository, you'll need the following installed:
 
 # System Requirements
 ## Hardware requirements
-`mgcpy` package requires only a standard computer with enough RAM to support the in-memory operations.
+The UTPM requires only a standard computer with enough RAM to support the in-memory operations.
 
 ## Software requirements
 ### OS Requirements
-This package is supported for *macOS* and *Linux*. The package has been tested on the following systems:
-+ macOS: Mojave (10.14.1)
-+ Linux: Ubuntu 16.04
+The UTPM has been tested on *Windows* and *macOS*.
 
 ### Python Dependencies
-`mgcpy` mainly depends on the Python scientific stack.
+The UTPM mainly depends on the Python scientific stack.
 
 ```
 numpy
+pandas
+matplotlib
 scipy
-
 seaborn
+ipython
+openpyxl
 ```
 
 # Installation Guide:
 
-### Install from PyPi
+### Install from Github
+git clone https://github.com/LisaOJWinkler/UrbanTransportPolicyModel
+cd UrbanTransportPolicyModel
+### Install dependencies using pip
+1. Install pip (package manager)
+
 ```
-pip3 install mgcpy
+python -m ensurepip --upgrade
+```
+
+2. Install pipenv
+
+```
+pip install --user pipenv
+```
+
+3. Install dependencies from the Pipfile
+
+```
+pipenv install
+```
+# to run a script
+
+1. Open the pipenv shell so you have access to the right packages
+
+```
+pipenv shell
+```
+
+2. Run the script
+
+```
+python PATH_TO_SCRIPT
 ```
 
 ### Install from Github
