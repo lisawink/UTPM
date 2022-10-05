@@ -35,7 +35,7 @@ plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)
-
+"""
 mask= ResultsDF['Regulated EV manufacture:'] == 0
 print((ResultsDF[mask].Energy/1e12))
 print((ResultsDF[mask].Emissions))
@@ -65,6 +65,66 @@ fig.colorbar(im, ax=ax,label='Car Travel Activity (%)')
 plt.xlabel('Cumulative Energy Demand up to 2050 (EJ)')
 plt.ylabel('Cumulative Emissions up to 2050 (MtCO$_{2eq}$)')
 plt.xlim(0,4.3)
+plt.grid(b=True)
+#plt.axhline(y=21.7, ls='--', c='red')
+plt.savefig('Fig4.png', bbox_inches="tight")
+plt.savefig('Fig4.pdf', bbox_inches="tight")
+plt.show()
+#plt.scatter(ResultsDF.Energy,ResultsDF.Emissions,c=ResultsDF['Modal Shift'],s=2)
+
+fig, ax = plt.subplots(figsize=(11,8))
+plt.grid()
+mask= ResultsDF['Regulated EV manufacture:'] == 0
+cmap=plt.cm.get_cmap('viridis', 6)
+im=ax.scatter(ResultsDF[mask]['Cumulative Tailpipe Emissions'],ResultsDF[mask]['Emissions'], marker='_', c=color,cmap=cmap ,s=30, vmax=30,vmin=-90)
+im2=ax.scatter(ResultsDF[~mask]['Cumulative Tailpipe Emissions'],ResultsDF[~mask]['Emissions'], marker='|', c=color2,cmap=cmap,s=30, vmax=30,vmin=-90 )
+#im=ax.scatter(ResultsDF[mask]['Energy']/1e12,ResultsDF[mask]['Emissions'], marker='_')
+#ax.scatter(ResultsDF[~mask]['Energy']/1e12,ResultsDF[~mask]['Emissions'], marker='|' )
+plt.legend(['No Regulated EV Manufacture','Regulated EV Manufacture','test3'])
+fig.colorbar(im, ax=ax,label='Car Travel Activity (%)')
+#plt.plot([0,4.5],[63.25,63.25],linewidth=1,color='black',ls='--')
+#plt.text(3,66,'CCC Balanced Pathway',fontsize='small')
+#plt.plot([0,4.5],[46.42,46.42],linewidth=1,color='black',ls='--')
+#plt.text(3,48,'CCC ~50% 1.5°C ',fontsize='small')
+#plt.plot([0,4.5],[72.05,72.05],linewidth=1,color='black',ls='--')
+#plt.text(3,74,'CCC >66% 2°C',fontsize='small')
+#plt.plot([0,4.5],[21.7,21.7],linewidth=1,color='black',ls='--')
+#plt.text(3,23,'Tyndall',fontsize='small')
+plt.xlabel('Cumulative Tailpipe Emissions up to 2050 (EJ)')
+plt.ylabel('Cumulative Emissions up to 2050 (MtCO$_{2eq}$)')
+#plt.xlim(0,4.3)
+plt.grid(b=True)
+#plt.axhline(y=21.7, ls='--', c='red')
+plt.savefig('Fig4.png', bbox_inches="tight")
+plt.savefig('Fig4.pdf', bbox_inches="tight")
+plt.show()
+#plt.scatter(ResultsDF.Energy,ResultsDF.Emissions,c=ResultsDF['Modal Shift'],s=2)
+
+fig, ax = plt.subplots(figsize=(11,8))
+plt.grid()
+mask= ResultsDF['Regulated EV manufacture:'] == 0
+cmap=plt.cm.get_cmap('viridis', 6)
+im=ax.scatter(ResultsDF[mask]['Emissions'],ResultsDF[mask]['Cumulative Tailpipe Emissions'], marker='_', c=color,cmap=cmap ,s=30, vmax=30,vmin=-90)
+im2=ax.scatter(ResultsDF[~mask]['Emissions'],ResultsDF[~mask]['Cumulative Tailpipe Emissions'], marker='|', c=color2,cmap=cmap,s=30, vmax=30,vmin=-90 )
+#im=ax.scatter(ResultsDF[mask]['Energy']/1e12,ResultsDF[mask]['Emissions'], marker='_')
+#ax.scatter(ResultsDF[~mask]['Energy']/1e12,ResultsDF[~mask]['Emissions'], marker='|' )
+plt.legend(['No Regulated EV Manufacture','Regulated EV Manufacture','test3'])
+fig.colorbar(im, ax=ax,label='Car Travel Activity (%)')
+plt.plot([0,300],[63.25,63.25],linewidth=1,color='black',ls='--')
+plt.text(1.35,64,'CCC Balanced Pathway',fontsize='small')
+plt.plot([0,300],[46.42,46.42],linewidth=1,color='black',ls='--')
+plt.text(1.5,47,'CCC ~50% 1.5°C ',fontsize='small')
+plt.plot([0,300],[72.05,72.05],linewidth=1,color='black',ls='--')
+plt.text(1.55,73,'CCC >66% 2°C',fontsize='small')
+plt.plot([0,300],[32,32],linewidth=1,color='black',ls='--')
+plt.text(1.05,32.5,'Element Energy Accelerated Green',fontsize='small')
+plt.plot([0,300],[27.5,27.5],linewidth=1,color='black',ls='--')
+plt.text(1.15,28,'Element Energy No Constraints',fontsize='small')
+plt.plot([0,300],[21.7,21.7],linewidth=1,color='black',ls='--')
+plt.text(1.75,22,'Tyndall',fontsize='small')
+plt.xlabel('Cumulative Emissions up to 2050 (EJ)')
+plt.ylabel('Cumulative Tailpipe Emissions up to 2050 (MtCO$_{2eq}$)')
+#plt.xlim(0,4.3)
 plt.grid(b=True)
 #plt.axhline(y=21.7, ls='--', c='red')
 plt.savefig('Fig4.png', bbox_inches="tight")
@@ -108,7 +168,7 @@ plt.savefig('Fig4_tailpipe.png', bbox_inches="tight")
 plt.savefig('Fig4_tailpipe.pdf', bbox_inches="tight")
 plt.show()
 #plt.scatter(ResultsDF.Energy,ResultsDF.Emissions,c=ResultsDF['Modal Shift'],s=2)
-
+"""
 ResultsDF['Tailpipe Emissions'] = ResultsDF['Cumulative Tailpipe Emissions']
 
 ResultsDF['Emissions'] = ResultsDF['Cumulative Electric Emissions'] + \
@@ -139,26 +199,35 @@ def find_bin(value, bins):
             return i
     return -1
 
-bins = create_bins(lower_bound=15,
+#create bins for tailpipe emissions
+bins_tail = create_bins(lower_bound=15,
                    width=10,
                    quantity=8)
 
+#create bins for total emissions
+bins_tot = create_bins(lower_bound=35,
+                   width=30,
+                   quantity=9)
+
+#find bins for each line of tailpipe emissions
+bin_array=[]
+for i in ResultsDF['Tailpipe Emissions']:
+    bin_array.append(bins_tail[find_bin(i,bins_tail)]) 
+ResultsDF['Tailpipe Bin Array']=bin_array
+
+#find bins for each line of total emissions
 bin_array=[]
 for i in ResultsDF['Emissions']:
-    bin_array.append(bins[find_bin(i,bins)]) 
-ResultsDF['Bin_Array']=bin_array
+    bin_array.append(bins_tot[find_bin(i,bins_tot)]) 
+ResultsDF['Total Bin Array']=bin_array
 
-bubble_size=ResultsDF['Bin_Array'].value_counts()
-
-for i in bin_array:
-    fosum_cta=sum([ResultsDF['Modal shift:'] for ResultsDF['Bin_Array'] in i])    
-
+#code for bubble plot with just tailpipe emissions
 count=[]
 avg_cta=[]
 tail_emiss=[]
-for i in bins:
-    results_bin=ResultsDF[ResultsDF['Bin_Array'] == i]
-    tail_emiss.append(sum(i)/len(i))
+for i in bins_tot:
+    results_bin=ResultsDF[ResultsDF['Tailpipe Bin Array'] == i]
+    tail_emiss.append(results_bin['Tailpipe Emissions'].sum(axis=0)/len(results_bin))
     count.append(len(results_bin))
     avg_cta.append(results_bin['Modal shift:'].sum(axis=0)/len(results_bin))
 
@@ -168,23 +237,78 @@ df = pd.DataFrame({
     'Colors': avg_cta,
     "bubble_size":count})
 
-scatter=plt.scatter('X', 'Y', s='bubble_size',c='Colors',alpha=0.5, data=df,label=avg_cta)
-plt.legend(handles=scatter.legend_elements()[0], 
-           labels=avg_cta,
-           title="CTA")
-plt.show()
+cmap=plt.cm.get_cmap('viridis')
 
-X=[]
-for i,j in enumerate(bubble_size):
-    print(i)
-    X.append(sum(bubble_size.index[i])/len(bubble_size.index[i]))
+#scatter=plt.scatter('X', 'Y', s='bubble_size',c='Colors',alpha=0.5, data=df,label=avg_cta)
+#plt.legend(handles=scatter.legend_elements()[0], 
+#           labels=avg_cta,
+ #          title="CTA")
+#plt.show()
 
-colors = np.random.rand(9)
+#code for bubble plot with tailpipe and total emissions
+count=[]
+avg_cta=[]
+tail_emiss=[]
+tot_emiss=[]
+for i in bins_tail:
+    for j in bins_tot:
+        results_bin=ResultsDF[(ResultsDF['Tailpipe Bin Array'] == i) & (ResultsDF['Total Bin Array'] == j)]
+        tail_emiss.append(results_bin['Tailpipe Emissions'].sum(axis=0)/len(results_bin))
+        tot_emiss.append(results_bin['Emissions'].sum(axis=0)/len(results_bin))
+        count.append(len(results_bin))
+        avg_cta.append(results_bin['Modal shift:'].sum(axis=0)/len(results_bin))
+
+
+
+print(tail_emiss)
+print(type(tail_emiss))
+print(avg_cta)
+print(type(avg_cta))
 
 df = pd.DataFrame({
-    'X': X,
-    'Y': X,
-    'Colors': colors,
-    "bubble_size":bubble_size})
+    'X': tot_emiss,
+    'Y': tail_emiss,
+    'bubble_colors': avg_cta,
+    'bubble_size':count})
+df=df.dropna()
+print(df)
+print(len(df['X']))
+print(len(df['Y']))
+print(len(df['bubble_colors']))
 
-plt.scatter('X', 'Y', s='bubble_size',c=colors,alpha=0.5, data=df)
+norm = plt.Normalize(df['bubble_colors'].min(), df['bubble_colors'].max())
+
+
+fig, ax = plt.subplots(figsize=(11,8))
+minsize = min(df['bubble_size'])**1.2
+maxsize = max(df['bubble_size'])**1.2
+im=sns.scatterplot(x='X',y= 'Y', size='bubble_size', sizes=(minsize, maxsize),data=df,alpha=0.9,hue='bubble_colors',palette=cmap)
+#print('this is im',im.legend_elements)
+sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+sm.set_array([])
+plt.colorbar(sm,label='Car Travel Activity (%)')
+h, l = plt.gca().get_legend_handles_labels()
+print('h is',h)
+print('l is',l)
+plt.legend(h[7:], l[7:],labelspacing=1.2, title="No. of simulations",bbox_to_anchor=(0.99,1.17),ncol=5)
+#plt.plot([0,300],[63.25,63.25],linewidth=1,color='black',ls='--')
+#plt.text(1.35,64,'CCC Balanced Pathway',fontsize='small')
+plt.plot([0,300],[46.42,46.42],linewidth=1,color='black',ls='--')
+plt.text(1.5,47,'Global average\n~50% 1.5°C ',fontsize='small')
+plt.plot([0,300],[72.05,72.05],linewidth=1,color='black',ls='--')
+plt.text(1.55,73,'Global average\n>66% 2°C',fontsize='small')
+#plt.plot([0,300],[32,32],linewidth=1,color='black',ls='--')
+#plt.text(1.05,32.5,'Element Energy Accelerated Green',fontsize='small')
+#plt.plot([0,300],[27.5,27.5],linewidth=1,color='black',ls='--')
+#plt.text(1.15,28,'Element Energy No Constraints',fontsize='small')
+plt.plot([0,300],[21.7,21.7],linewidth=1,color='black',ls='--')
+plt.text(1.75,22,'Tyndall',fontsize='small')
+plt.annotate("Global\nequal\nshare",xy=(272,30),xytext=(272,80),arrowprops=dict(arrowstyle='->',lw=3),horizontalalignment='center')
+plt.annotate("Fairness",xy=(255,28))
+plt.xlabel('Cumulative Total Emissions up to 2050 (MtCO$_{2eq}$)')
+plt.ylabel('Cumulative Tailpipe Emissions up to 2050 (MtCO$_{2}$)')
+plt.xlim(0,300)
+plt.grid(b=True)
+plt.savefig('Fig4_bubble_v2.png', bbox_inches="tight")
+plt.savefig('Fig4_bubble_v2.pdf', bbox_inches="tight")
+plt.show()
