@@ -5,6 +5,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
 import matplotlib.cm as mpl_cm
 import matplotlib.pylab as pl
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+import matplotlib.colors
 
 ResultsDF = pd.read_csv('figure_6_cont2.csv')
 
@@ -239,6 +241,9 @@ df = pd.DataFrame({
 
 cmap=plt.cm.get_cmap('viridis')
 
+colorlist=["navy", "tab:orange"]
+cmap = LinearSegmentedColormap.from_list('testCmap', colors=colorlist, N=256)
+
 #scatter=plt.scatter('X', 'Y', s='bubble_size',c='Colors',alpha=0.5, data=df,label=avg_cta)
 #plt.legend(handles=scatter.legend_elements()[0], 
 #           labels=avg_cta,
@@ -290,24 +295,25 @@ plt.colorbar(sm,label='Car Travel Activity (%)')
 h, l = plt.gca().get_legend_handles_labels()
 print('h is',h)
 print('l is',l)
-plt.legend(h[7:], l[7:],labelspacing=1.2, title="No. of simulations",bbox_to_anchor=(0.99,1.17),ncol=5)
-#plt.plot([0,300],[63.25,63.25],linewidth=1,color='black',ls='--')
-#plt.text(1.35,64,'CCC Balanced Pathway',fontsize='small')
-plt.plot([0,300],[46.42,46.42],linewidth=1,color='black',ls='--')
-plt.text(1.5,47,'Global average\n~50% 1.5°C ',fontsize='small')
-plt.plot([0,300],[72.05,72.05],linewidth=1,color='black',ls='--')
-plt.text(1.55,73,'Global average\n>66% 2°C',fontsize='small')
-#plt.plot([0,300],[32,32],linewidth=1,color='black',ls='--')
-#plt.text(1.05,32.5,'Element Energy Accelerated Green',fontsize='small')
+plt.legend(h[7:], l[7:],labelspacing=1.2, title="Possible Policy Combinations",bbox_to_anchor=(0.99,1.17),ncol=5)
+plt.plot([0,350],[63.25,63.25],linewidth=1,color='black',ls='--')
+plt.text(305,64,'CCC Balanced\nPathway',fontsize='small',horizontalalignment='center')
+plt.plot([0,350],[46.42,46.42],linewidth=1,color='black',ls='--')
+plt.text(305,47,'CCC Global Avg.\n~50% 1.5°C ',fontsize='small',horizontalalignment='center')
+plt.plot([0,350],[72.05,72.05],linewidth=1,color='black',ls='--')
+plt.text(305,73,'CCC Global Avg.\n>66% 2°C',fontsize='small',horizontalalignment='center')
+plt.plot([0,350],[32,32],linewidth=1,color='black',ls='--')
+plt.text(305,32.5,'Element Energy\nAccelerated Green',fontsize='small',horizontalalignment='center')
 #plt.plot([0,300],[27.5,27.5],linewidth=1,color='black',ls='--')
 #plt.text(1.15,28,'Element Energy No Constraints',fontsize='small')
-plt.plot([0,300],[21.7,21.7],linewidth=1,color='black',ls='--')
-plt.text(1.75,22,'Tyndall',fontsize='small')
-plt.annotate("Global\nequal\nshare",xy=(272,30),xytext=(272,80),arrowprops=dict(arrowstyle='->',lw=3),horizontalalignment='center')
-plt.annotate("Fairness",xy=(255,28))
+plt.plot([0,350],[21.7,21.7],linewidth=1,color='black',ls='--')
+plt.text(305,22,'Tyndall',fontsize='small',horizontalalignment='center')
+plt.annotate("Global\nEqual\nShare",xy=(21,18),xytext=(21,80),arrowprops=dict(arrowstyle='->',lw=3),horizontalalignment='center')
+plt.annotate("Fairness",xy=(2,15))
 plt.xlabel('Cumulative Total Emissions up to 2050 (MtCO$_{2eq}$)')
 plt.ylabel('Cumulative Tailpipe Emissions up to 2050 (MtCO$_{2}$)')
-plt.xlim(0,300)
+plt.xlim(0,350)
+plt.ylim(10,100)
 plt.grid(b=True)
 plt.savefig('Fig4_bubble_v2.png', bbox_inches="tight")
 plt.savefig('Fig4_bubble_v2.pdf', bbox_inches="tight")
