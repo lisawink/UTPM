@@ -19,17 +19,6 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
                 fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate):
     
     #Run evolve fleet function with parameters given
-    """
-    total,bev,petrol,diesel,hybrid,conv,ages,electric_emissions,tailpipe_emissions,wtt_emissions,mod_shift_emiss,elec_demand,foss_demand,\
-    mod_shift_energy,ev_prod_emissions,ice_prod_emissions,conv_prod_emissions,ev_prod_energy,ice_prod_energy,conv_prod_energy,\
-    km_driven=evolve_fleet2.evolve_fleet(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
-                fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate)
-
-    results=['total_cars','bev_cars','petrol_cars','diesel_cars','plugin_cars','conv_cars','ages','demand_difference','electric_emiss',
-            'tailpipe_emiss','wtt_emiss','mod_shift_emiss','elec_demand','foss_demand','mod_shift_energy','ev_prod_emissions',
-            'ice_prod_emissions','conv_prod_emissions','ev_prod_energy','ice_prod_energy','conv_prod_energy','km_driven']
-    """
-    
     results_dict=evolve_fleet2.evolve_fleet(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
                 fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate)
     #print(results_dict)
@@ -38,13 +27,7 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
     print('Policies: Phase-Out:',phase_out_date,'Hybrid Phase-Out:',phase_out_hybrid,'Scrap Age:',scrap_age_post2020,\
           'Light-weighting:',mass,'Modal shift:',fleet_size_projection,'Retro-fitting:',retrofit_percentage,\
           'Regulated manufacture:',manufacture,'Electricity decarb:',elec,'Modal Shift Rate:',rate)
-    
-    #print(np.array(results_dict['electric_emiss'])/10**12)
-    #print(np.array(results_dict['tailpipe_emiss'])/10**12)
-    #print(np.array(results_dict['ev_prod_emiss'])/10**9)
-    #print(np.array(results_dict['ice_prod_emiss'])/10**9)
-    #print(np.array(results_dict['conv_prod_emiss'])/10**9)
-    #print(np.array(results_dict['mod_shift_emiss']))
+
 
     if __name__ == '__main__':
 
@@ -78,19 +61,20 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
         axs[0].set_xlim(2020,2050)
         axs[0].grid()
 
-        axs[1].stackplot(range(2020,2051),np.array(results_dict['electric_emiss'])/10**12,np.array(results_dict['tailpipe_emiss'])/10**12,np.array(results_dict['ev_prod_emiss'])/10**9,np.array(results_dict['ice_prod_emiss'])/10**9,np.array(results_dict['conv_prod_emiss'])/10**9,np.array(results_dict['mod_shift_emiss']), labels=['Electricity Emissions','Tailpipe Emissions','EV Embedded Emissions','ICE Embedded Emissions','Retrofit Embedded Emissions','Replacement Mode Emissions'],colors=['black','blue','red','orange','purple','skyblue'],alpha=0.8,linestyle='None')
+        axs[1].stackplot(range(2020,2051),np.array(results_dict['electric_emiss']),np.array(results_dict['tailpipe_emiss']),np.array(results_dict['ev_prod_emiss']),np.array(results_dict['ice_prod_emiss']),np.array(results_dict['conv_prod_emiss']),np.array(results_dict['mod_shift_emiss']), labels=['Electricity Emissions','Tailpipe Emissions','EV Embedded Emissions','ICE Embedded Emissions','Retrofit Embedded Emissions','Replacement Mode Emissions'],colors=['black','blue','red','orange','purple','skyblue'],alpha=0.8,linestyle='None')
         axs[1].set_ylabel('Emissions (MtCO2)')
         axs[1].set_xlabel('Year')
         #axs[1].legend(bbox_to_anchor=(1.7, 0.7))
         axs[1].set_xlim(2020,2050)
         axs[1].grid()
 
-        axs[2].stackplot(range(2020,2051),np.cumsum(np.array(results_dict['electric_emiss'])/10**12),np.cumsum(np.array(results_dict['tailpipe_emiss'])/10**12),np.cumsum(np.array(results_dict['ev_prod_emiss'])/10**9),np.cumsum(np.array(results_dict['ice_prod_emiss'])/10**9),np.cumsum(np.array(results_dict['conv_prod_emiss'])/10**9),np.cumsum(np.array(results_dict['mod_shift_emiss'])), labels=['Electricity Emissions','Tailpipe Emissions','EV Embedded Emissions','ICE Embedded Emissions','Retrofit Embedded Emissions','Replacement Mode Emissions'],colors=['black','blue','red','orange','purple','skyblue'],alpha=0.8,linestyle='None')
+        axs[2].stackplot(range(2020,2051),np.cumsum(np.array(results_dict['electric_emiss'])),np.cumsum(np.array(results_dict['tailpipe_emiss'])),np.cumsum(np.array(results_dict['ev_prod_emiss'])),np.cumsum(np.array(results_dict['ice_prod_emiss'])),np.cumsum(np.array(results_dict['conv_prod_emiss'])),np.cumsum(np.array(results_dict['mod_shift_emiss'])), labels=['Electricity Emissions','Tailpipe Emissions','EV Embedded Emissions','ICE Embedded Emissions','Retrofit Embedded Emissions','Replacement Mode Emissions'],colors=['black','blue','red','orange','purple','skyblue'],alpha=0.8,linestyle='None')
         axs[2].set_ylabel('Cumulative Emissions (MtCO2)')
         axs[2].set_xlabel('Year')
         axs[2].legend(bbox_to_anchor=(0.3,-0.2))
         axs[2].set_xlim(2020,2050)
         axs[2].grid()
+        plt.savefig('UTPM_result.png', bbox_inches="tight")
 
         plt.show()
 
@@ -113,15 +97,6 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
         plt.grid()
         plt.show()
 
-    """
-    results_dict['electric_emiss']=np.array(results_dict['electric_emiss'])/10**12
-    results_dict['tailpipe_emiss']=np.array(results_dict['tailpipe_emiss'])/10**12
-    results_dict['ev_prod_emiss']=np.array(results_dict['ev_prod_emiss'])/10**9
-    results_dict['ice_prod_emiss']=np.array(results_dict['ice_prod_emiss'])/10**9
-    results_dict['conv_prod_emiss']=np.array(results_dict['conv_prod_emiss'])/10**9
-
-    """
-
     results_dict['cum_electric']=np.append(0,np.cumsum(np.array(results_dict['electric_emiss'])))
     results_dict['cum_tailpipe']=np.append(0,np.cumsum(np.array(results_dict['tailpipe_emiss'])))
     results_dict['cum_ev_prod']=np.append(0,np.cumsum(np.array(results_dict['ev_prod_emiss'])))
@@ -141,16 +116,6 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
     #ages list too long for csv output so set to 0
     results_dict['ages']=0
     
-    #returns emissions by type, cumulative emissions by type, energy demand by type, cumulative energy demand by type,
-    #age of fleet every year, and distance driven
-    """
-    return np.array(electric_emissions)/10**12,np.array(tailpipe_emissions)/10**12,np.array(ev_prod_emissions)/10**9,\
-            np.array(ice_prod_emissions)/10**9,np.array(conv_prod_emissions)/10**9,np.array(mod_shift_emiss),\
-            np.array(cum_electric),cum_tailpipe,cum_ev_prod,cum_ice_prod,cum_conv_prod,cum_mod_shift_emiss,\
-            np.array(elec_demand),foss_demand,ev_prod_energy,ice_prod_energy,conv_prod_energy,mod_shift_energy,\
-            cum_elec,cum_foss,cum_ev_en,cum_ice_en,cum_conv_en,cum_mod_en,ages,km_driven
-    """
-    #print(results_dict)
     return results_dict
 
 #run main method for UTPM
