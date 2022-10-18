@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.cm as mpl_cm
 import matplotlib.pylab as pl
 
-ResultsDF = pd.read_csv('figure_6_cont2.csv')
+ResultsDF = pd.read_csv('sens_an.csv')
 
 ResultsDF['Emissions'] = ResultsDF['Cumulative Electric Emissions'] + \
                          ResultsDF['Cumulative Tailpipe Emissions'] + \
@@ -24,6 +24,9 @@ ResultsDF['Energy'] = ResultsDF['Cumulative Electric Energy'] + \
                       ResultsDF['Cumulative ICE Production Energy'] + \
                       ResultsDF['Cumulative Conversion Production Energy']
 
+ResultsDF['Emissions'] = ResultsDF['Cumulative Tailpipe Emissions']
+
+ResultsDF['Energy'] = ResultsDF['Cumulative Tailpipe Energy']
 
 SMALL_SIZE = 15
 MEDIUM_SIZE = 17
@@ -48,8 +51,8 @@ fig, ax = plt.subplots(figsize=(11,8))
 plt.grid()
 mask= ResultsDF['Regulated EV manufacture:'] == 0
 cmap=plt.cm.get_cmap('viridis', 6)
-im=ax.scatter(ResultsDF[mask]['Energy']/1e12,ResultsDF[mask]['Emissions'], marker='_', c=color,cmap=cmap ,s=30, vmax=30,vmin=-90)
-im2=ax.scatter(ResultsDF[~mask]['Energy']/1e12,ResultsDF[~mask]['Emissions'], marker='|', c=color2,cmap=cmap,s=30, vmax=30,vmin=-90 )
+im=ax.scatter(ResultsDF[mask]['Energy']/1e12,ResultsDF[mask]['Emissions'], marker='_', c=color,cmap=cmap ,s=30, vmax=-50,vmin=-90)
+im2=ax.scatter(ResultsDF[~mask]['Energy']/1e12,ResultsDF[~mask]['Emissions'], marker='|', c=color2,cmap=cmap,s=30, vmax=-50,vmin=-90 )
 #im=ax.scatter(ResultsDF[mask]['Energy']/1e12,ResultsDF[mask]['Emissions'], marker='_')
 #ax.scatter(ResultsDF[~mask]['Energy']/1e12,ResultsDF[~mask]['Emissions'], marker='|' )
 plt.legend(['No Regulated EV Manufacture','Regulated EV Manufacture','test3'])

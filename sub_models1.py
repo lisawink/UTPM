@@ -43,9 +43,14 @@ class Vehicle:
         emissions_value=0
         phev_electric_emissions=0
         phev_tailpipe_emissions=0
-        #kgC02 per litre of petrol and diesel (average biofuel blend)
-        petrol=2.14805
-        diesel=2.52058
+
+        #kgC02 per litre of petrol and diesel (average biofuel blend, 2022 DEFRA)
+        #petrol=2.14805
+        #diesel=2.52058
+        
+        #kgC02eq per litre of petrol and diesel (average biofuel blend, 2022 DEFRA)
+        petrol=2.16
+        diesel=2.56
         
         #if diesel
         if self.fuel_type==0:
