@@ -1,3 +1,5 @@
+"""Module containing method for creating Figure 1"""
+
 import UTPM_Run_Model
 from IPython.display import Markdown, display
 import matplotlib.pyplot as plt
