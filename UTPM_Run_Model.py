@@ -15,7 +15,7 @@ print("The variable __name__ tells me which context this file is running in.")
 print("The value of __name__ is:", repr(__name__))
 print("File has changed")
 
-def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
+def __main__(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
                 fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate):
     
     #Run evolve fleet function with parameters given
@@ -122,7 +122,7 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
 if __name__ == '__main__':
     #Run base case
     #base=Run_Model(phase_out_date=2030,phase_out_hybrid=2035,scrap_age_pre2020=20,scrap_age_post2020=15,mass=1400,fleet_size_projection=20,miles_driven_projection=20,retrofit_percentage=0,manufacture=0,elec=2050,rate=28)
-    extreme1=Run_Model(phase_out_date=2025,phase_out_hybrid=2025,scrap_age_pre2020=15,scrap_age_post2020=10,mass=840,fleet_size_projection=-70,miles_driven_projection=-70,retrofit_percentage=0.2,manufacture=1,elec=2020,rate=3)
-    extreme2=Run_Model(phase_out_date=2025,phase_out_hybrid=2025,scrap_age_pre2020=15,scrap_age_post2020=10,mass=840,fleet_size_projection=-82,miles_driven_projection=-82,retrofit_percentage=0.2,manufacture=1,elec=2020,rate=5)
+    extreme1=__main__(phase_out_date=2025,phase_out_hybrid=2025,scrap_age_pre2020=15,scrap_age_post2020=10,mass=840,fleet_size_projection=-70,miles_driven_projection=-70,retrofit_percentage=0.2,manufacture=1,elec=2020,rate=3)
+    extreme2=__main__(phase_out_date=2025,phase_out_hybrid=2025,scrap_age_pre2020=15,scrap_age_post2020=10,mass=840,fleet_size_projection=-82,miles_driven_projection=-82,retrofit_percentage=0.2,manufacture=1,elec=2020,rate=5)
     print(extreme1['cum_tailpipe'])
     print(extreme2['cum_tailpipe'])

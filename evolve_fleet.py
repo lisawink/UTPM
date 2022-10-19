@@ -1,3 +1,5 @@
+"""Module containing function to evolve the fleet"""
+
 import numpy as np
 import initialise_fleet
 import sum_over_fleet
@@ -10,7 +12,7 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     """
     
     #create car list from vehicle initialisation class sorted by year of manufacture in ascending order (oldest cars first)
-    car_list=initialise_fleet1.initialise_fleet(p,ph,m,fs,md,c,e) 
+    car_list=initialise_fleet.initialise_fleet(p,ph,m,fs,md,c,e) 
     
     results=['total_cars','bev_cars','petrol_cars','diesel_cars','plugin_cars','conv_cars','ages','demand_difference','electric_emiss',
             'tailpipe_emiss','wtt_emiss','mod_shift_emiss','elec_demand','foss_demand','wtt_energy','mod_shift_energy','ev_prod_emiss',
