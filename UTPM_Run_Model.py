@@ -7,8 +7,8 @@ import matplotlib.cm as mpl_cm
 import matplotlib.pylab as pl
 import seaborn as sns
 
-import sub_models1
-import evolve_fleet2
+import sub_models
+import evolve_fleet
 
 print("This is my file to test Python's execution methods.")
 print("The variable __name__ tells me which context this file is running in.")
@@ -19,7 +19,7 @@ def Run_Model(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post20
                 fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate):
     
     #Run evolve fleet function with parameters given
-    results_dict=evolve_fleet2.evolve_fleet(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
+    results_dict=evolve_fleet.evolve_fleet(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
                 fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate)
     #print(results_dict)
 
