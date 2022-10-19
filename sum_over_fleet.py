@@ -1,8 +1,6 @@
-"""
-Module containing function that sums over fleet to calculate yearly emissions and energy demand
-"""
+"""Module containing function that sums over fleet to calculate yearly emissions and energy demand"""
 
-from sub_models1 import Fuel_Consumption
+from sub_models import Fuel_Consumption
 
 def sum_over_fleet(car_list,dist,mass,year):
     """
@@ -19,23 +17,6 @@ def sum_over_fleet(car_list,dist,mass,year):
     for i in yearly_results_type:
         yearly_results[i]=[]
 
-    """
-    #create lists
-    electric_emissions=[]
-    tailpipe_emissions=[]
-    wtt_emissions=[]
-    ice_production_emissions=[]
-    ev_production_emissions=[]
-    ice_production_energy=[]
-    ev_production_energy=[]
-    conv_production_emissions=[]
-    conv_production_energy=[]
-    elec_demand_yearly=[]
-    foss_demand_yearly=[]
-    kilometres=[]
-    """
-    
-    
     #for every car in list
     for j in range(0,len(car_list)):
         yearly_results['km_driven'].append(dist)

@@ -1,8 +1,8 @@
 import numpy as np
-import initialise_fleet1
+import initialise_fleet
 import sum_over_fleet
 from LondonData import cars_2019
-from sub_models1 import Mathematics, Adoption_Rate, Vehicle, Distance_Driven, Fuel_Consumption, Electricity, ModalShift
+from sub_models import Mathematics, Adoption_Rate, Vehicle, Distance_Driven, Fuel_Consumption, Electricity, ModalShift
 
 def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     """
@@ -21,30 +21,6 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
     for i in results:
         results_dict[i]=[]
 
-    """
-    total_cars=[]
-    bev_cars=[]
-    petrol_cars=[]
-    diesel_cars=[]
-    plugin_cars=[]
-    conv_cars=[]
-    ages=[]
-    demand_difference=[]
-    electric_emiss=[]
-    tailpipe_emiss=[]
-    wtt_emiss=[]
-    ev_prod_emissions=[]
-    ice_prod_emissions=[]
-    conv_prod_emissions=[]
-    elec_demand=[]
-    foss_demand=[]
-    ev_prod_energy=[]
-    ice_prod_energy=[]
-    conv_prod_energy=[]
-    km_driven=[]
-    """
-    avg_cars_removed=[]
-    
     #find future fleet size using user input for % increase from fleet size in 2019 to 2041 levels
     fleetsize=np.append(Mathematics.straight_fit(2019,cars_2019,2041,cars_2019*(1+fs/100),range(2020,2041)),[cars_2019*(1+fs/100)]*11)
  
@@ -99,9 +75,6 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
         after_removal=len(car_list)
 
         cars_removed=before_removal-after_removal
-        per_cars_removed=cars_removed/before_removal
-        print('cars removed:',cars_removed,'percentage:',per_cars_removed)
-        avg_cars_removed.append(per_cars_removed)
         
         #find number of new cars needed to satisfy total fleet size
         #fleet size in year n+1 - number of cars in list after cars have been scrapped
@@ -171,108 +144,12 @@ def evolve_fleet(p,ph,g1,g2,m,fs,md,rf,c,e,r):
         
         #dist=distance driven by each cars in that year
         dist=Distance_Driven(md,r).Lon()[i]*1000000000/len(car_list)
-        
-        """
-        Now in sum_over_fleet
-        
-        #create lists
-        electric_emissions=[]
-        tailpipe_emissions=[]
-        wtt_emissions=[]
-        ice_production_emissions=[]
-        ev_production_emissions=[]
-        ice_production_energy=[]
-        ev_production_energy=[]
-        conv_production_emissions=[]
-        conv_production_energy=[]
-        elec_demand_yearly=[]
-        foss_demand_yearly=[]
-        kilometres=[]
-        
-        #for every car in list
-        for j in range(0,len(car_list)):
-            kilometres.append(dist)
-            
-            #add emissions from that car to yearly list (emissions=carbon intensity*distance driven)
-            
-            if car_list[j].fuel_type==0:
-                #diesel
-                #MJ of fossil fuel energy (l/km fuel consumption*energy density of fuel*km driven)
-                foss_demand_yearly.append(Fuel_Consumption(m).diesel()[car_list[j].age-1989]/100*36.9*dist)
-                #emissions in gCO2e
-                tailpipe_emissions.append(car_list[j].emissions(2020+i)[0]*dist)
-                wtt_emissions.append(car_list[j].emissions(2020+i)*dist)
-                
-            if car_list[j].fuel_type==1:
-                #petrol
-                foss_demand_yearly.append(Fuel_Consumption(m).petrol()[car_list[j].age-1989]/100*33.7*dist)
-                tailpipe_emissions.append(car_list[j].emissions(2020+i)[0]*dist)
-                wtt_emissions.append(car_list[j].emissions(2020+i)*dist)
-            
-            if car_list[j].fuel_type==2:
-                #phev
-                #utility factor of 39% as found by the ICCT
-                #combination of BEV and petrol energy consumption/emissions
-                elec_demand_yearly.append(0.39*(Fuel_Consumption(m).bev()[i+30]/100*dist+Fuel_Consumption(m).bev()[i+30]/100*dist*1.36/3.6))
-                electric_emissions.append(car_list[j].emissions(2020+i)[1]*dist+0.39*Fuel_Consumption(m).bev()[i+30]/100*dist*94.06)
-                foss_demand_yearly.append(0.61*Fuel_Consumption(m).petrol()[car_list[j].age-1989]/100*33.7*dist)
-                tailpipe_emissions.append(car_list[j].emissions(2020+i)[2]*dist)
-                wtt_emissions.append(car_list[j].emissions(2020+i)*dist)
-            
-            if car_list[j].fuel_type==3:
-                #retroffited ICEV, now acts as BEV
-                elec_demand_yearly.append(Fuel_Consumption(m).bev()[i+30]/100*dist+Fuel_Consumption(m).bev()[i+30]/100*dist*1.36/3.6)
-                electric_emissions.append(car_list[j].emissions(2020+i)[0]*dist+Fuel_Consumption(m).bev()[i+30]/100*dist*94.06)
 
-            if car_list[j].fuel_type==4:
-                #BEV
-                #energy consumption of EV driving + energy demand for EV charging point infrastructure (in kwh)
-                elec_demand_yearly.append(Fuel_Consumption(m).bev()[i+30]/100*dist+Fuel_Consumption(m).bev()[i+30]/100*dist*1.36/3.6)
-                #emissions in gCO2e
-                #emissions from driving EVs + emissions from EV charging infrastructure
-                electric_emissions.append(car_list[j].emissions(2020+i)[0]*dist+Fuel_Consumption(m).bev()[i+30]/100*dist*94.06)
-            
-            #for cars made in this year, add the embedded emissions from manufacture+end-of-life
-            if car_list[j].age==(2020+i):
-                if car_list[j].fuel_type==0:
-                    ice_production_emissions.append(car_list[j].prod_emissions(2020+i)*1000)
-                    ice_production_energy.append(car_list[j].prod_energy()*1000)
-                if car_list[j].fuel_type==1:
-                    ice_production_emissions.append(car_list[j].prod_emissions(2020+i)*1000)
-                    ice_production_energy.append(car_list[j].prod_energy()*1000)
-                if car_list[j].fuel_type==2:
-                    ev_production_emissions.append(car_list[j].prod_emissions(2020+i)*1000)
-                    ev_production_energy.append(car_list[j].prod_energy()*1000)
-                if car_list[j].fuel_type==3:
-                    conv_production_emissions.append(car_list[j].prod_emissions(2020+i)*1000)
-                    conv_production_energy.append(car_list[j].prod_energy()*1000)
-                if car_list[j].fuel_type==4:
-                    ev_production_emissions.append(car_list[j].prod_emissions(2020+i)*1000)
-                    ev_production_energy.append(car_list[j].prod_energy()*1000)
-                
-        
-        km_driven.append(sum(kilometres))
-        electric_emiss.append(sum(electric_emissions))
-        tailpipe_emiss.append(sum(tailpipe_emissions))
-        wtt_emiss.append(sum(wtt_emissions))
-        ev_prod_emissions.append(sum(ev_production_emissions))
-        ice_prod_emissions.append(sum(ice_production_emissions))
-        conv_prod_emissions.append(sum(conv_production_emissions))
-        ev_prod_energy.append(sum(ev_production_energy))
-        ice_prod_energy.append(sum(ice_production_energy))
-        conv_prod_energy.append(sum(conv_production_energy))
-        #electricity demand in kwh
-        elec_demand.append(sum(elec_demand_yearly))
-        #fossil fuel energy demand in MJ
-        foss_demand.append(sum(foss_demand_yearly))
-        """
-
+        #sum over entire car fleet to fetch yearly results
         yearly_results=sum_over_fleet.sum_over_fleet(car_list,dist,m,i)
 
         for i in yearly_results:
             results_dict[i].append(yearly_results[i])
-    
-    print(sum(avg_cars_removed)/31)
 
     avg_energy_efficiency=Electricity(e).avg_efficiency()
     avg_eroi=Electricity(e).avg_eroi()
