@@ -1,3 +1,5 @@
+"""Module containing method for creating Supplementary Figure 1"""
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -16,38 +18,6 @@ plt.rc('figure', titlesize=BIGGER_SIZE)
 ResultsDF = pd.read_csv('sens_an2.csv')
 
 ResultsDF['Emissions'] = ResultsDF['Cumulative Tailpipe Emissions']
-
-"""
-plt.plot(ResultsDF['Modal shift:'],ResultsDF['Emissions'],'x',linestyle='-')
-plt.xlabel('Reduction in Car Travel Activity in 2050 (%)\nApplied to Highest Ambition Scenario')
-plt.ylabel('Cumulative Tailpipe Emissions\nup to 2050 (MtCO$_{2eq}$)')
-plt.ylim(20,28)
-plt.xlim(-49,-91)
-plt.grid(b=True)
-#plt.axhline(y=21.7, ls='--', c='red')
-plt.savefig('sens_plot.png', bbox_inches="tight")
-plt.show()
-
-plt.plot(ResultsDF['Modal shift:'],ResultsDF['Modal shift rate (years):'],'x')
-plt.xlabel('Reduction in Car Travel Activity in 2050 (%)\nApplied to Highest Ambition Scenario')
-plt.ylabel('Rate of CTA (years)')
-#plt.ylim(20,28)
-plt.xlim(-49,-91)
-plt.grid(b=True)
-#plt.axhline(y=21.7, ls='--', c='red')
-plt.savefig('sens_plot2.png', bbox_inches="tight")
-plt.show()
-"""
-sc=plt.scatter(ResultsDF['Modal shift:'],ResultsDF['Modal shift rate (years):'],c=ResultsDF['Emissions'],marker='x',cmap='RdYlBu_r')
-plt.xlabel('Reduction in Car Travel Activity in 2050 (%)\nApplied to Highest Ambition Scenario')
-plt.ylabel('Rate of CTA (years)')
-#plt.ylim(20,28)
-plt.xlim(-49,-91)
-plt.grid(b=True)
-plt.colorbar(sc,pad=0.15,label='Cumulative Tailpipe Emissions\nup to 2050 (MtCO$_{2eq}$)')
-#plt.axhline(y=21.7, ls='--', c='red')
-plt.savefig('sens_plot2.png', bbox_inches="tight")
-plt.show()
 
 x=np.array(ResultsDF['Modal shift:']).reshape(13,21)
 y=(np.array(ResultsDF['Modal shift rate (years):'])+2022).reshape(13,21)
@@ -68,4 +38,5 @@ plt.grid(b=True)
 plt.colorbar(sc,pad=0.05,label='Cumulative Tailpipe Emissions\nup to 2050 (MtCO$_{2eq}$)')
 #plt.axhline(y=21.7, ls='--', c='red')
 plt.savefig('sens_plot2.png', bbox_inches="tight")
+plt.savefig('sens_plot2.pdf', bbox_inches="tight")
 plt.show()
