@@ -37,8 +37,10 @@ openpyxl
 # Installation Guide:
 
 ### Install from Github
+```
 git clone https://github.com/LisaOJWinkler/UrbanTransportPolicyModel
 cd UrbanTransportPolicyModel
+```
 ### Install dependencies using pip
 1. Install pip (package manager)
 
