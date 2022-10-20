@@ -19,7 +19,7 @@ CPU: 4+ cores, 3.3+ GHz/core
 ## Software requirements
 ### OS Requirements
 The UTPM should be compatible with Windows, Mac, and Linux operating systems.
-The UTPM has been tested on *Windows* and *macOS*.
+The UTPM has been tested on *Windows 11* and *macOS Mojave (10.14.1)*.
 
 ### Python Dependencies
 The UTPM mainly depends on the Python scientific stack.
@@ -83,6 +83,11 @@ python PATH_TO_SCRIPT
 - __main__(phase_out_date=2030,phase_out_hybrid=2035,scrap_age_pre2020=20,scrap_age_post2020=15,mass=1400,\
   fleet_size_projection=20,miles_driven_projection=20,retrofit_percentage=0,manufacture=0,elec=2050,rate=28)
   
+# Running different policies
+
+- Different policy combinations can be run in the model by adjusting the parameters when calling the main method. The description and ranges of values for each policy are as follows:
+- 
+
 # Saving results for multiple runs of the model
 
 - The save results method is located in save_results.py
