@@ -74,15 +74,18 @@ python PATH_TO_SCRIPT
 # Running the UTPM
 
 - The main method is located in UTPM_Run_Model.py
-- Calling the function __main__(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
+- Calling the function 
+```
+__main__(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
   fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate)
+```
   returns a dictionary of emissions and energy demand results
 
 # Calling the baseline case
-
-- __main__(phase_out_date=2030,phase_out_hybrid=2035,scrap_age_pre2020=20,scrap_age_post2020=15,mass=1400,\
+```
+__main__(phase_out_date=2030,phase_out_hybrid=2035,scrap_age_pre2020=20,scrap_age_post2020=15,mass=1400,\
   fleet_size_projection=20,miles_driven_projection=20,retrofit_percentage=0,manufacture=0,elec=2050,rate=28)
-  
+```  
 # Running different policies
 
 - Different policy combinations can be run in the model by adjusting the parameters when calling the main method. The description and ranges of values for each policy are as follows:
