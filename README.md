@@ -34,7 +34,7 @@ ipython
 openpyxl
 ```
 
-# Installation Guide:
+# Installation Guide
 
 ### Install from Github
 ```
@@ -90,8 +90,12 @@ __main__(phase_out_date=2030,phase_out_hybrid=2035,scrap_age_pre2020=20,scrap_ag
 ```  
 ### Running different policies
 
-- Different policy combinations can be run in the model by adjusting the parameters when calling the main method. The description and ranges of values for each policy are as follows:
-- 
+- Different policy combinations can be run in the model by adjusting the parameters when calling the main method. The description of the policies and parameters they can take are as follows:
+- Phase out date - the ban on the sale of new ICEVs (petrol and diesel vehicles). Can take any integer value between 2022-2040
+- Hybrid phase out date - the ban on the sale of plug-in hybrid vehicles (PHEVs). Can take values 2025, 2030, 2035 and 2040
+```
+phase_out_date=2025,2030,2035,2040
+```
 
 ### Saving results for multiple runs of the model
 
