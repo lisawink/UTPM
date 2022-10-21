@@ -5,6 +5,10 @@ This is the repository for the UTPM model behind the Nature Communications artic
 The model can be accessed by cloning the github repository and following the instructions below.
 
 ## Table of contents
+- [Prerequisites](#prerequisites)
+- [System Requirements](#system-requirements)
+- [Installation Guide](#installation-guide)
+- [Running the UTPM](#running-the-utpm)
 
 ## Prerequisites
 To work with everything in this repository, you'll need [Python](https://www.python.org/) 3.0 or higher installed
