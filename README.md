@@ -89,8 +89,8 @@ __main__(phase_out_date=2030,phase_out_hybrid=2035,scrap_age_pre2020=20,scrap_ag
   fleet_size_projection=20,miles_driven_projection=20,retrofit_percentage=0,manufacture=0,elec=2050,rate=28)
 ```
 
-### Changing cities
-```
+### Running the UTPM for a different city
+
 - The UTPM can be applied to a different city by changing the input data for the initialisation of the car fleet
 - Data for London is currently included in RegionalData.py
 - Data for a different city should replace the data in the RegionalData.py file following the same format. This includes
