@@ -1,6 +1,6 @@
 """Module containing function to initialise the fleet"""
 
-import LondonData as regional_data
+import RegionalData as regional_data
 from sub_models import Adoption_Rate, Vehicle
 
 def initialise_fleet(p,ph,m,fs,md,c,e):
