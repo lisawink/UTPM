@@ -125,41 +125,45 @@ km_2019
 ### Running different policies
 
 - Different policy combinations can be run in the model by adjusting the parameters when calling the main method. The description of the policies and parameters they can take are as follows:
-- Phase out date - the ban on the sale of new ICEVs (petrol and diesel vehicles). Can take any integer value between 2022-2040
+- Phase out date - the ban on the sale of new ICEVs (petrol and diesel vehicles). Can take any integer value between 2022-2050
 ```
-phase_out_date=2022-2040
+phase_out_date
 ```
 - Hybrid phase out date - the ban on the sale of plug-in hybrid vehicles (PHEVs). Can take values 2025, 2030, 2035 and 2040
 ```
-phase_out_hybrid=2025,2030,2035,2040
+phase_out_hybrid
 ```
-- Scrap age (pre-2020 and post-2020) 
+- Scrap age (pre-2020 and post-2020) - the age at which cars are removed from the model. Can take any integer value between 0 and 30
 ```
 scrap_age_pre2020
 scrap_age_post2020
 ```
-- Lightweighting - mass of average car in fleet. Can take values 500-2000 kg
+- Lightweighting - mass of the average car in fleet. Can take values 500-2500 kg
 ```
 mass
 ```
-- Car travel activity
+- Car travel activity - defined by: 
+   - future fleet size - number of future cars in fleet, given as a percentage increase from 2019 values in 2040, e.g. +20% or -60%. Can take any positive or negative integer value between -100% and +100%
+   - miles driven - magnitude of future distance driven, given as a percentage from 2019 values, e.g. +20% or -60%. Can take any positive or negative integer       value between -100% and +100%
+   - rate - rate of change in future distance driven, given as a number of years from the year 2022. Can take any integer greater than 1.
 ```
   fleet_size_projection
   miles_driven_projection
   rate
  ```
- - Retrofitting
+ - Retrofitting - percentage of scrapped fossil fuel cars which are retrofitted with electric engines. Can take any percentage between 0% and 100%.
  ```
   retrofit_percentage
  ```
- - Regulated manufacturing standards
+ - Regulated manufacturing standards - lower embedded emissions for manufacturing electric vehicles. Can take boolean values (0  being non-regulated manufacturing and 1 being regulated manufacturing).
  ```
  manufacture
  ```
- - Decarbonisation of electrical grid
+ - Decarbonisation of electrical grid - increased speed of forecasted decarbonisation of electrical grid. Takes year of net-zero as parameter which can take any integer value between 2020 and 2070.
  ```
  elec
  ```
+ More information on these parameters and the method can be found in the Nature Communications paper and corresponding supplementary information.
 
 ### Saving results for multiple runs of the model
 
