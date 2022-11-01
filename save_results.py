@@ -1,7 +1,7 @@
-"""Method for saving results from multiple policy options"""
+"""Module for saving results for multiple policy options"""
 
 import pandas as pd
-from UTPM_Run_Model import Run_Model
+from UTPM_Run_Model import __main__
 
 results=pd.DataFrame()
 
@@ -23,8 +23,7 @@ for i in phaseout:
                         for k in scrap:
                             for o in china:
                                 
-
-                                case=Run_Model(phase_out_date=i,phase_out_hybrid=i,scrap_age_pre2020=k+5,scrap_age_post2020=k,mass=l,\
+                                case=__main__(phase_out_date=i,phase_out_hybrid=i,scrap_age_pre2020=k+5,scrap_age_post2020=k,mass=l,\
                                    fleet_size_projection=m,miles_driven_projection=m,retrofit_percentage=n,manufacture=o,elec=p,rate=j)
                                 
                                 data = {'Phase-Out:':i,'Net-zero:':p,'Retro-fitting:':n,'Light-weighting:':l,'Modal shift:':m,'Scrap age:':k,'Regulated EV manufacture:':o,'Modal shift rate (years):':j,

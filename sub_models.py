@@ -2,7 +2,7 @@
 
 import numpy as np
 import scipy as sp
-import LondonData as regional_data
+import RegionalData as regional_data
 
 class Mathematics:
     """
