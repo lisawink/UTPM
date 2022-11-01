@@ -10,9 +10,6 @@ The model can be accessed by cloning the github repository and following the ins
 - [Running the UTPM](#running-the-utpm)
 - [License](#license)
 
-## Prerequisites
-To work with everything in this repository, you'll need [Python](https://www.python.org/) 3.0 or higher installed
-
 # System Requirements
 ## Hardware requirements
 The UTPM requires only a standard computer with enough RAM to support the in-memory operations. For minimal performance, this will be a computer with about 2 GB of RAM. For optimal performance, we recommend a computer with the following specs:
