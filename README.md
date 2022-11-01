@@ -169,3 +169,7 @@ mass
 ### Saving results for multiple runs of the model
 
 The method for saving results to a file is located in save_results.py. Calling this method loops through policy combinations (which can be adjusted) and calls the main method multiple times. Results are saved in a .csv or .xlsx file
+
+### Reproducing figures 
+
+The code for reproducing figures 1, 3 and 4 and supplementary figure 1 is included in the Figures folder
