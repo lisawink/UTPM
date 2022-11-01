@@ -83,13 +83,12 @@ python PATH_TO_SCRIPT
 
 # Running the UTPM (Demo)
 
-- The main method is located in UTPM_Run_Model.py
-- Calling the function 
+The main method is located in UTPM_Run_Model.py Calling the function 
 ```
 __main__(phase_out_date,phase_out_hybrid,scrap_age_pre2020,scrap_age_post2020,mass,\
   fleet_size_projection,miles_driven_projection,retrofit_percentage,manufacture,elec,rate)
 ```
-  returns a dictionary of emissions and energy demand results
+returns a dictionary of emissions and energy demand results. One run of the model takes ~ 30 seconds.
 
 ### Calling the baseline case
 ```
@@ -99,9 +98,7 @@ __main__(phase_out_date=2030,phase_out_hybrid=2035,scrap_age_pre2020=20,scrap_ag
 
 ### Running the UTPM for a different city
 
-- The UTPM can be applied to a different city by changing the input data for the initialisation of the car fleet
-- Data for London is currently included in RegionalData.py
-- Data for a different city should replace the data in the RegionalData.py file following the same format. This includes
+The UTPM can be applied to a different city by changing the input data for the initialisation of the car fleet. Data for London is currently included in RegionalData.py. Data for a different city should replace the data in the RegionalData.py file following the same format. This includes
 ```
 #2019 number of cars in city (thousands)
 cars_2019
@@ -128,7 +125,7 @@ km_2019
 
 ### Running different policies
 
-- Different policy combinations can be run in the model by adjusting the parameters when calling the main method. The description of the policies and parameters they can take are as follows:
+Different policy combinations can be run in the model by adjusting the parameters when calling the main method. The description of the policies and parameters they can take are as follows:
 - Phase out date - the ban on the sale of new ICEVs (petrol and diesel vehicles). Can take any integer value between 2022-2050
 ```
 phase_out_date
@@ -171,6 +168,4 @@ mass
 
 ### Saving results for multiple runs of the model
 
-- The save results method is located in save_results.py
-- Calling this method loops through policy combinations and calls the main method multiple times
-- Results are saved in a .csv or .xlsx file
+The method for saving results to a file is located in save_results.py. Calling this method loops through policy combinations (which can be adjusted) and calls the main method multiple times. Results are saved in a .csv or .xlsx file
