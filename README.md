@@ -5,7 +5,6 @@ This is the repository for the UTPM model behind the Nature Communications artic
 The model can be accessed by cloning the github repository and following the instructions below.
 
 ## Table of contents
-- [Prerequisites](#prerequisites)
 - [System Requirements](#system-requirements)
 - [Installation Guide](#installation-guide)
 - [Running the UTPM](#running-the-utpm)
@@ -25,8 +24,11 @@ CPU: 4+ cores, 3.3+ GHz/core
 The UTPM should be compatible with Windows, Mac, and Linux operating systems.
 The UTPM has been tested on *Windows 11* and *macOS Mojave (10.14.1)*.
 
+### Prerequisites
+To work with everything in this repository, you'll need [Python](https://www.python.org/) 3.0 or higher installed
+
 ### Python Dependencies
-The UTPM mainly depends on the Python scientific stack.
+The UTPM depends mainly on the Python scientific stack and the following packages:
 
 ```
 numpy
@@ -39,6 +41,8 @@ openpyxl
 ```
 
 # Installation Guide
+
+Takes 5-10 minutes
 
 ### Install from Github
 ```
@@ -77,7 +81,7 @@ pipenv shell
 python PATH_TO_SCRIPT
 ```
 
-# Running the UTPM
+# Running the UTPM (Demo)
 
 - The main method is located in UTPM_Run_Model.py
 - Calling the function 
