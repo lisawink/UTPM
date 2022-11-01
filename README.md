@@ -172,4 +172,4 @@ The method for saving results to a file is located in save_results.py. Calling t
 
 ### Reproducing figures 
 
-The code for reproducing figures 1, 3 and 4 and supplementary figure 1 is included in the Figures folder
+The code for reproducing figures 1, 3 and 4 and supplementary figure 1 is included in the folder titled 'Figures'
