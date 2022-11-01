@@ -1,5 +1,5 @@
 # Urban Transport Policy Model (UTPM)
-This is the repository for the UTPM model behind the Nature Communications article:
+UTPM is an open-source python package for estimating future emissions and energy impacts of cars in urban areas under various policies. Policies can be investigated by running the model with different policy parameters as inputs. The model then undergoes a simulation of the car fleet between 2020-2050 with differing rates of electric vehicle adoption, light-weighting, travel demand reduction, and more. Results can be analysed by emission and energy type, e.g. impacts coming from ICEVs, EVs and those embedded in the supply chain. The methodology is described in the article:
 
 ## Overview
 The model can be accessed by cloning the github repository and following the instructions below.
@@ -162,7 +162,7 @@ mass
  ```
  elec
  ```
- More information on these parameters and the method can be found in the Nature Communications paper and corresponding supplementary information.
+ More information on these parameters and the method can be found in the published article and corresponding supplementary information.
 
 ### Saving results for multiple runs of the model
 
