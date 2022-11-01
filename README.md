@@ -44,8 +44,8 @@ Takes 5-10 minutes
 
 ### Install from Github
 ```
-git clone https://github.com/LisaOJWinkler/UrbanTransportPolicyModel
-cd UrbanTransportPolicyModel
+git clone https://github.com/LisaOJWinkler/UTPM
+cd UTPM
 ```
 ### Install dependencies using pip
 1. Install pip (package manager)
