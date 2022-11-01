@@ -8,6 +8,7 @@ The model can be accessed by cloning the github repository and following the ins
 - [System Requirements](#system-requirements)
 - [Installation Guide](#installation-guide)
 - [Running the UTPM](#running-the-utpm)
+- [License](#license)
 
 ## Prerequisites
 To work with everything in this repository, you'll need [Python](https://www.python.org/) 3.0 or higher installed
@@ -173,3 +174,7 @@ The method for saving results to a file is located in save_results.py. Calling t
 ### Reproducing figures 
 
 The code for reproducing figures 1, 3 and 4 and supplementary figure 1 is included in the folder titled 'Figures'
+
+# License
+
+This project is covered under the **Apache 2.0 License**.
